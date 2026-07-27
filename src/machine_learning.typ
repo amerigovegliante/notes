@@ -13,9 +13,23 @@
 
 #pagebreak()
 
-#show: index
+#index()
 
 #pagebreak()
 
 #set page(numbering: "1")
 #counter(page).update(1)
+
+= Math for Machine Learning
+= Supervised Learning
+= PAC, Generalization and SRM
+= Decision Trees
+= Neural Networks
+= Linear Models and SVM
+= Preprocessing
+= Practical Issues
+= Representation Learning
+= Bayesian Learning
+= Ensemble Learning
+= Clustering
+= Recommender Systems

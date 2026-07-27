@@ -13,9 +13,17 @@
 
 #pagebreak()
 
-#show: index
+#index()
 
 #pagebreak()
 
 #set page(numbering: "1")
 #counter(page).update(1)
+
+= Mathematical Models
+= Heuristics
+= Linear Programming and the Simplex Method
+= Duality
+= Column Generation Methods
+= Branch and Bound
+= Cutting Plane Method

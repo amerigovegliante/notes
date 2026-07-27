@@ -13,9 +13,23 @@
 
 #pagebreak()
 
-#show: index
+#index()
 
 #pagebreak()
 
 #set page(numbering: "1")
 #counter(page).update(1)
+
+= Agents
+= Problem Solving
+= Informed Search
+= Adversarial Search
+= Propositional Logic
+= First-Order Logic
+= Uncertainty
+= Artificial Neural Networks
+= Reinforcement Learning
+= Constraint Satisfaction Problems
+= Natural Language Processing
+= Basic Computer Vision
+= Multimodal Large Language Models

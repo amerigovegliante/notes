@@ -13,7 +13,7 @@
 
 #pagebreak()
 
-#show: index
+#index()
 
 #pagebreak()
 
