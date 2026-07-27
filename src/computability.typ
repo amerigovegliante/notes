@@ -8,7 +8,8 @@
   title: "Computability",
   professors: "Prof. Baldan Paolo",
   year: "2026/2027",
-  background: rgb(219, 152, 101)
+  background1: rgb(253, 253, 150),
+  background2: rgb(119, 221, 119)
 )
 
 #pagebreak()

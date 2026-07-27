@@ -8,7 +8,8 @@
   title: "Artificial Intelligence",
   professors: "Prof. Sperduti Alessandro",
   year: "2026/2027",
-  background: rgb(103, 191, 207)
+  background1: rgb(152, 251, 203),
+  background2: rgb(253, 253, 150)
 )
 
 #pagebreak()

@@ -8,7 +8,8 @@
   title: "Machine Learning",
   professors: "Prof. Aiolli Fabio",
   year: "2026/2027",
-  background: rgb(212, 187, 91)
+  background1: rgb(255, 150, 79),
+  background2: rgb(255, 105, 97)
 )
 
 #pagebreak()

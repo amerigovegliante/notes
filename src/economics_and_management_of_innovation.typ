@@ -8,7 +8,8 @@
   title: "Economics & Management of Innovation",
   professors: "Prof.ssa Sedita Silvia Rita, Prof. Maghssudipour Amir",
   year: "2026/2027",
-  background: rgb(114, 191, 113)
+  background1: rgb(119, 221, 119),
+  background2: rgb(180, 217, 239)
 )
 
 #pagebreak()
