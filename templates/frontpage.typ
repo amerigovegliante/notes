@@ -1,24 +1,15 @@
-#set page(
-  paper: "a4",
-  fill: white
-)
-
-#set heading(numbering: "1.")
-
-#let titolo = "Titolo degli Appunti"
-#let docente = "Nome del Docente"
-#let facolta = "Nome della Facoltà"
-#let universita = "Nome dell'Università"
-#let anno = "2024/2025"
-#let autore = "Vegliante Amerigo"
-#let email = "nome@email.it"
+#let title = "title"
+#let professors = "professors"
+#let year = "2024/2025"
+#let author = "Vegliante Amerigo"
+#let email = "name@email.com"
 #let background = rgb(0,0,0)
 
 #let frontespizio(
-  titolo: titolo,
-  docente: docente,
-  anno: anno,
-  autore: autore,
+  title: title,
+  professors: professors,
+  year: year,
+  author: author,
   background: background
 ) = {
   rect(
@@ -31,13 +22,13 @@
         #v(0.3cm)
       
       #align(center)[
-        #text(size: 28pt, weight: "bold")[#titolo]
+        #text(size: 28pt, weight: "bold")[#title]
       ]
       
       #v(0.3cm)
       
       #align(center)[
-        #text(size: 16pt, style: "italic")[#autore]
+        #text(size: 16pt, style: "italic")[#author]
       ]
       
       #v(0.3cm)
@@ -49,11 +40,11 @@
       #v(0.3cm)
       
       #align(center)[
-        #text(size: 12pt)[#docente]
+        #text(size: 12pt)[#professors]
       ]
 
       #align(center)[
-        #text(size: 12pt)[#anno]
+        #text(size: 12pt)[#year]
       ]
     ]
   ]
