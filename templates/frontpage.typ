@@ -8,7 +8,7 @@
 #let background2 = rgb(0,0,0)
 #let image_path = "image.png"
 
-#let frontespizio(
+#let frontpage(
   title: title,
   professors: professors,
   year: year,
@@ -23,33 +23,31 @@
     stroke: black
   )[
     #align(center+horizon)[
-        #v(0.3cm)
-      
-      #align(center)[
-        #text(size: 28pt, weight: "bold")[#title]
-      ]
-      
-      #v(0.3cm)
-      
-      #align(center)[
-        #text(size: 16pt, style: "italic")[#author]
-      ]
-      
-      #v(0.3cm)
-      
-      #align(center)[
-        #line(length: 40%, stroke: 0.5pt + black)
-      ]
-      
-      #v(0.3cm)
-      
-      #align(center)[
-        #text(size: 12pt)[#professors]
-      ]
+      #rect(
+        inset: 0.5cm,
+        fill: white,
+        stroke: black,
+      )[
+        #align(center)[
+          #text(size: 28pt, weight: "bold")[#title]
+        ]
+        
+        #align(center)[
+          #text(size: 16pt, style: "italic")[#author]
+        ]
+        
+        #align(center)[
+          #line(length: 40%, stroke: 0.5pt + black)
+        ]
+            
+        #align(center)[
+          #text(size: 12pt)[#professors]
+        ]
 
-      #align(center)[
-        #text(size: 12pt)[#year]
-      ]      
+        #align(center)[
+          #text(size: 12pt)[#year]
+        ]      
+      ]
     ]
   ]
 }

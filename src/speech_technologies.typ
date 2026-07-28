@@ -1,10 +1,10 @@
-#import "../templates/frontpage.typ": frontespizio
+#import "../templates/frontpage.typ": frontpage
 #import "../templates/style.typ": style
 #import "../templates/index.typ": index
 
 #show: style
 
-#frontespizio(
+#frontpage(
   title: "Speech Technologies",
   professors: "Prof. Brutti Alessio",
   year: "2026/2027",
@@ -22,9 +22,22 @@
 #counter(page).update(1)
 
 = Digital Speech Processing
+#pagebreak()
+
 = Automatic Speech Recognition
+#pagebreak()
+
 = Speaker Diarization
+#pagebreak()
+
 = Multimodality & LLMs
+#pagebreak()
+
 = Training a Large Speech Model
+#pagebreak()
+
 = Low Resourced Languages & Domains
+#pagebreak()
+
 = Distant ASR
+#pagebreak()

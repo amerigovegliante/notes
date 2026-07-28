@@ -1,10 +1,11 @@
-#import "../templates/frontpage.typ": frontespizio
+#import "../templates/frontpage.typ": frontpage
 #import "../templates/style.typ": style
 #import "../templates/index.typ": index
+#import "../templates/please_note.typ": please_note
 
 #show: style
 
-#frontespizio(
+#frontpage(
   title: "Artificial Intelligence",
   professors: "Prof. Sperduti Alessandro",
   year: "2026/2027",
@@ -22,15 +23,41 @@
 #counter(page).update(1)
 
 = Agents
+
+#pagebreak()
+
 = Problem Solving
+#pagebreak()
+
 = Informed Search
+#pagebreak()
+
 = Adversarial Search
+#pagebreak()
+
 = Propositional Logic
+#pagebreak()
+
 = First-Order Logic
+#pagebreak()
+
 = Uncertainty
+#pagebreak()
+
 = Artificial Neural Networks
+#pagebreak()
+
 = Reinforcement Learning
+#pagebreak()
+
 = Constraint Satisfaction Problems
+#pagebreak()
+
 = Natural Language Processing
+#pagebreak()
+
 = Basic Computer Vision
+#pagebreak()
+
 = Multimodal Large Language Models
+#pagebreak()

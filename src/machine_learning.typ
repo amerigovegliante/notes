@@ -1,10 +1,10 @@
-#import "../templates/frontpage.typ": frontespizio
+#import "../templates/frontpage.typ": frontpage
 #import "../templates/style.typ": style
 #import "../templates/index.typ": index
 
 #show: style
 
-#frontespizio(
+#frontpage(
   title: "Machine Learning",
   professors: "Prof. Aiolli Fabio",
   year: "2026/2027",
@@ -22,15 +22,40 @@
 #counter(page).update(1)
 
 = Math for Machine Learning
+#pagebreak()
+
 = Supervised Learning
+#pagebreak()
+
 = PAC, Generalization and SRM
+#pagebreak()
+
 = Decision Trees
+#pagebreak()
+
 = Neural Networks
+#pagebreak()
+
 = Linear Models and SVM
+#pagebreak()
+
 = Preprocessing
+#pagebreak()
+
 = Practical Issues
+#pagebreak()
+
 = Representation Learning
+#pagebreak()
+
 = Bayesian Learning
+#pagebreak()
+
 = Ensemble Learning
+#pagebreak()
+
 = Clustering
+#pagebreak()
+
 = Recommender Systems
+#pagebreak()

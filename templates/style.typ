@@ -4,5 +4,6 @@
   set page(
     margin: (top: 1cm,bottom: 1cm, left: 1cm, right: 1cm)
   )
+  set par(justify: true)
   body
 }
