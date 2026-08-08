@@ -20,24 +20,3 @@
 
 #set page(numbering: "1")
 #counter(page).update(1)
-
-= Digital Speech Processing
-#pagebreak()
-
-= Automatic Speech Recognition
-#pagebreak()
-
-= Speaker Diarization
-#pagebreak()
-
-= Multimodality & LLMs
-#pagebreak()
-
-= Training a Large Speech Model
-#pagebreak()
-
-= Low Resourced Languages & Domains
-#pagebreak()
-
-= Distant ASR
-#pagebreak()

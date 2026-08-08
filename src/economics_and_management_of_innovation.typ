@@ -20,39 +20,3 @@
 
 #set page(numbering: "1")
 #counter(page).update(1)
-
-= Introduction
-#pagebreak()
-
-= Sources of Innovation
-#pagebreak()
-
-= Types and Patterns of Innovation
-#pagebreak()
-
-= Timing of Entry
-#pagebreak()
-
-= Defining the Organization’s Strategic Direction
-#pagebreak()
-
-= Choosing Innovation Projects
-#pagebreak()
-
-= Collaboration Strategy
-#pagebreak()
-
-= Protecting Innovation
-#pagebreak()
-
-= Organizing for Innovation
-#pagebreak()
-
-= Managing the new Product Development Process
-#pagebreak()
-
-= Managing new Product Development Teams
-#pagebreak()
-
-= Crafting a Deployment Strategy
-#pagebreak()
