@@ -19,8 +19,8 @@
   rect(
     width: 100%,
     height: 100%,
-    fill: gradient.linear(background1, background2, angle: 90deg),
-    stroke: black
+    fill: gradient.linear(background1, background2, angle: 45deg),
+    stroke: black+0.05cm
   )[
     #align(center+horizon)[
       #rect(

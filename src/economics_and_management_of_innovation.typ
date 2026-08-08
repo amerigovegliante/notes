@@ -5,7 +5,7 @@
 #show: style
 
 #frontpage(
-  title: "Economics & \n Management of Innovation",
+  title: "Economics \n and \n Management of Innovation",
   professors: "Prof.ssa Sedita Silvia Rita, Prof. Maghssudipour Amir",
   year: "2026/2027",
   background1: rgb(119, 221, 119),
