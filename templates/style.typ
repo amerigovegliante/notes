@@ -1,9 +1,11 @@
 #let style(body) = {
-  set text(font: "FreeSans", size: 12pt)
   set heading(numbering: "1.")
   set page(
-    margin: (top: 1cm,bottom: 1cm, left: 1cm, right: 1cm)
+    margin: (top: 2cm,bottom: 2cm, left: 2cm, right: 2cm)
   )
   set par(justify: true)
+  set text(size: 14pt)
+
   body
 }
+

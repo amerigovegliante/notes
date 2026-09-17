@@ -2,15 +2,19 @@
 #import "../templates/style.typ": style
 #import "../templates/index.typ": index
 
-#show: style
+#set text(font: "Google Sans", size: 12pt)
+
+#set page(margin: 0cm)
 
 #frontpage(
-  title: "Economics \n and \n Management of Innovation",
+  title: "Economics and Management of Innovation",
   professors: "Prof.ssa Sedita Silvia Rita, Prof. Maghssudipour Amir",
   year: "2026/2027",
   background1: rgb(119, 221, 119),
   background2: rgb(180, 217, 239)
 )
+
+#show: style
 
 #pagebreak()
 
@@ -20,3 +24,42 @@
 
 #set page(numbering: "1")
 #counter(page).update(1)
+
+= Introduction
+#pagebreak()
+
+= Sources of Innovation
+#pagebreak()
+
+= Types and Patterns of Innovation
+#pagebreak()
+
+= Standards Battles and Design Dominance
+#pagebreak()
+
+= Timing of Entry
+#pagebreak()
+
+= Defining the Organization's Strategic Direction
+#pagebreak()
+
+= Choosing Innovation Projects
+#pagebreak()
+
+= Collaboration Strategies
+#pagebreak()
+
+= Protecting Innovation
+#pagebreak()
+
+= Organizing for Innovation
+#pagebreak()
+
+= Managing new Product Development Process
+#pagebreak()
+
+= Managing new Product Development Teams
+#pagebreak()
+
+= Crafting a Deployment Strategy
+#pagebreak()

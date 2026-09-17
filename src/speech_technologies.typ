@@ -2,7 +2,9 @@
 #import "../templates/style.typ": style
 #import "../templates/index.typ": index
 
-#show: style
+#set text(font: "Google Sans", size: 12pt)
+
+#set page(margin: 0cm)
 
 #frontpage(
   title: "Speech Technologies",
@@ -12,6 +14,8 @@
   background2: rgb(152, 251, 203)
 )
 
+#show: style
+
 #pagebreak()
 
 #index()
@@ -20,3 +24,24 @@
 
 #set page(numbering: "1")
 #counter(page).update(1)
+
+= Digital Speech Processing
+#pagebreak()
+
+= Automatic Speech Recognition
+#pagebreak()
+
+= Speaker Diarization
+#pagebreak()
+
+= Multimodality and LLMs
+#pagebreak()
+
+= Training a Large-scale Model
+#pagebreak()
+
+= Low Resourced Languages and Domains
+#pagebreak()
+
+= Distant ASR
+#pagebreak()

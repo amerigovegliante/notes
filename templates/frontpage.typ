@@ -8,6 +8,10 @@
 #let background2 = rgb(0,0,0)
 #let image_path = "image.png"
 
+#set page(
+    margin: (top: 0cm,bottom: 0cm, left: 0cm, right: 0cm)
+  )
+
 #let frontpage(
   title: title,
   professors: professors,
@@ -20,16 +24,17 @@
     width: 100%,
     height: 100%,
     fill: gradient.linear(background1, background2, angle: 45deg),
-    stroke: black+0.05cm
+    stroke: rgb(255,255,255)+0cm
   )[
     #align(center+horizon)[
       #rect(
-        inset: 0.5cm,
-        fill: white,
-        stroke: black,
+        inset: 1cm,
+        fill: color.linear-rgb(255, 255, 255, 160),
+        stroke: black+0cm,
+        radius: 0.5cm,
       )[
         #align(center)[
-          #text(size: 28pt, weight: "bold")[#title]
+          #text(size: 24pt, weight: "bold")[#title]
         ]
         
         #align(center)[
