@@ -266,4 +266,30 @@ _How do we formulate this problem formally?_
       - $y$ is the _resulting state_. 
   - *Solution*: It's a sequence of actions that leads from the _initial state_ to the _goal state_.
 
+As we know, the real world is very complex to formulate into a problem with states, actions etc. which is why we are going to abstract the _State Space_ (e.g. Arad instead of specific locations in Arad), the _Action Space_ (e.g. simple _city-to-city_ routes instead of _street-to-street_ specifically) and _Solution_ (where a set of state must be a solution applicable to the real world).
+
+- #underline()[*EXAMPLE*]: 
+#figure(
+  image("asset/artificial-intelligence-10.png", width: 60%)
+)
+
+Alternatively:
+
+- *Tree Search*:
+
+```py
+def tree_search(problem):
+  frontier = problem.InitialState()
+  while True:
+    if frontier.isEmpty() == True:
+      return None
+    else:
+      node = frontier.pop()
+    if goal in node.States():
+        return node.getState()
+       
+```
+
+
+
 #pagebreak()
