@@ -2,7 +2,7 @@
 #let title = "title"
 #let professors = "professors"
 #let year = "2024/2025"
-#let author = "Vegliante Amerigo"
+#let author = "amerigo.vegliante@studenti.unipd.it"
 #let email = "name@email.com"
 #let background1 = rgb(0,0,0)
 #let background2 = rgb(0,0,0)
@@ -53,6 +53,14 @@
           #text(size: 12pt)[#year]
         ]      
       ]
+    ]
+  ]
+
+  pagebreak()
+
+  align(center + horizon)[
+    #par()[
+      _This document is not a to be taken as a "everything you need for the exam" type of document nor a substitute to professor's materials, books and similar, I will not care about complaints for exams not passed given that I published this material for free and no one forced me to._
     ]
   ]
 }
