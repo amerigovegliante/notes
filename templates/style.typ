@@ -4,7 +4,7 @@
     margin: (top: 1cm,bottom: 1cm, left: 1cm, right: 1cm)
   )
   set par(justify: true)
-  set text(size: 11pt)
+  set text(size: 10pt)
 
 show math.equation.where(block: true): set text(size: 13pt)
 
