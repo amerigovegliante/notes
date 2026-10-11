@@ -245,7 +245,7 @@ def simple_problem_solving_agent(percept):
   - *Solution Structure*: Sequence of cities crossed from Arad to Bucharest.
 
 #figure(
-  image("asset/artificial-intelligence-9.png", width: 0%),
+  image("asset/artificial-intelligence-9.png", width: 80%),
   caption: [
     Simple graph of states and actions for the romania driving example
   ]
@@ -276,7 +276,7 @@ As we know, the real world is very complex to formulate into a problem with stat
 
 - #underline()[*EXAMPLE*]: 
 #figure(
-  image("asset/artificial-intelligence-10.png", width: 75%),
+  image("asset/artificial-intelligence-10.png", width: 65%),
   caption: [
     Driving in Romania Iterations example
   ]
@@ -350,7 +350,7 @@ def graph_search(problem):
 - *Nodes vs State*: A *state* is the representaion of a physical configuration and a *node* is a data structure constituting part of a search tree and it includes *parent*, *children*, *depth* and *path cost* $g(x)$.
 
 #figure(
-  image("asset/artificial-intelligence-11.png", width: 50%),
+  image("asset/artificial-intelligence-11.png", width: 45%),
   caption: [
     Node vs State example
   ]
@@ -367,7 +367,7 @@ def graph_search(problem):
     - _Repeat._
 
 #figure(
-  image("asset/artificial-intelligence-12.png", width: 80%),
+  image("asset/artificial-intelligence-12.png", width: 65%),
   caption: [
     BFS schema
   ]
@@ -381,7 +381,7 @@ def graph_search(problem):
     - _If not, expand it, calculate the path cost for each child and add them to the frontier._
     - _Repeat._
 #figure(
-  image("asset/artificial-intelligence-13.png", width: 50%),
+  image("asset/artificial-intelligence-13.png", width: 45%),
   caption: [
     Dijkstra's algorithm schema
   ]
@@ -394,7 +394,7 @@ def graph_search(problem):
     - It dives to that child's first child until a dead end.
     - When all children have been explored or a dead end has been reached we backtrack to the most recent junction.
 #figure(
-  image("asset/artificial-intelligence-14.png", width: 70%),
+  image("asset/artificial-intelligence-14.png", width: 65%),
   caption: [
     DFS schema
   ]
@@ -406,7 +406,7 @@ def graph_search(problem):
     - _*$"DL" = 1$*: Go down to only the root's children level checking if the goal is there, if it fails increment depth._
     - _*Repeat* until the goal is found._
 #figure(
-  image("asset/artificial-intelligence-15.png", width: 80%),
+  image("asset/artificial-intelligence-15.png", width: 75%),
   caption: [
     IDS schema
   ]
@@ -422,7 +422,7 @@ def graph_search(problem):
     - _If a collision is detected form a solution from start to goal._
     - _Repeat._
 #figure(
-  image("asset/artificial-intelligence-16.png", width: 80%),
+  image("asset/artificial-intelligence-16.png", width: 75%),
   caption: [
     Bidirectional Search schema
   ]
@@ -481,6 +481,8 @@ def graph_search(problem):
   - $m$ is the *maximum depth* of the search tree.
   - $l$ is the *depth limit*.
 
+#pagebreak()
+
 == Informed Search Strategies
 
 It's a type of searching strategies where we exploit information on the problem, called *heuristics*, beforehand.
@@ -497,5 +499,107 @@ It's a type of searching strategies where we exploit information on the problem,
   ]
 )
 \
-- *$A^*$ Search *
+- *$A^*$ Search*: It's the gold standard for pathfinding and graph traversal algorithms combining the exact cost tracking of Dijkstra's Algorithm and the heuristics of Best-first Search. It works following its *core formula*: $ f(n) = g(n) + h(n) $ where:
+
+  - *Past Cost $g(n)$*: The exact accumulated cost inherited from the Dijkstra's Algorithm.
+
+  - *Future Cost Estimation $h(n)$*: It's the estimated cost heuristic inherited from Best-first Search.
+
+  - *Total Estimation $f(n)$*: It represent the #underline()[estimated] cheapest cost through node $n$ to the goal.
+  \
+  - *How it works*:
+    - _Put the starting node into the frontier (a Priority Queue) ordered by the $f(n)$ value._
+    - _Pop the node with lowest $f(n)$ off the frontier._
+    - _If it's the goal state, return the solution._
+    - _If not, generate child nodes and expand like this:_
+
+      - _$g("child") = g("parent") + "step cost"$_
+      - _$f("child") = g("child") + h("child")$_
+      _And then add them to the frontier._
+    - _Repeat._
+
+  - *Admissible Heuristics*: The heuristic #underline()[never] overestimate the actual cost to reach the goal. $ h(n) <= h^* (n) $ where $h^*(n)$ is the absolute cheapest cost.  
+#figure(
+  image("asset/artificial-intelligence-18.jpg", width: 75%),
+  caption: [
+    $A^*$ search example
+  ]                               
+)
+\
+  - *Theorem*: $A^*$ is optimal.
+
+    - *Proof*: Let's suppose that some suboptimal goal $G_2$ has been generated and is in the queue, also let $n$ be an unexpanded node on a shortest path to an optimal goal $G$.
+    
+  #figure(
+    image("asset/artificial-intelligence-19.png", width: 50%),
+    caption: [
+      Optimality of $A^*$ tree search
+    ]
+  )
+  \
+  $
+    f(G_2) &= g(G_2) && "since" h(G_2) = 0 \
+    &> g(G) && "since" G_2 "is suboptimal" \
+    &>= f(n) && "since" h "is admissible"
+  $ Since $f(G_2) > f(n)$, $A^*$ will never select $G_2$ for expansion.
+#align(right)[$square.filled$]
+
+- _Does this proof work also for Graph Search?_ \ \ *NO* because the previous proof relies on the basis that every node path is explored #underline()[independently] which is ok for tree search but for graph search is not because it introduces the *explored set* to avoid duplicate work, which creates a major problem for $A^*$:
+  
+  - *The Reopening Problem*: _What if a suboptimal path reaches a state first and expands it pushing that state into the explored set?_ Well, if the actual optimal path to that state is discovered later it will be thrown away and the algorithm will possibly miss the true optimal solution.
+
+    - *Solution*: Use *consistent* heuristics.
+
+    - *Consistent heuristics*: A heuristics function is consistent if $ h(n) <= c(n,a,n') + h(n') $ and if a heuristics is consistent then we have 
+    $
+      f(n') &= g(n') + h(n')\
+      &= g(n) + c(n,a,n') + h(n')\
+      &>= g(n) + h(n)\
+      &= f(n)
+    $ which, if we look at it geometrically, is basically saying that the heuristics function in a graph has to always be compliant to the *triangle inequality principle*.
+
+    #figure(
+      image("asset/artificial-intelligence-20.png", width: 25%),
+      caption: [
+        Geometrical visualization of consistent heuristics
+      ]
+    )
+
+  - *Lemma*: $A^*$ expands nodes in order of increasing $f$ value, it gradually adds "*$f$ contours*" of nodes where che contour $i$ has all nodes with *$f = f_i$* where *$f_i < f_(i+1)$*.
+  
+  #figure(
+  image("asset/artificial-intelligence-21.png", width: 70%)
+)
+
+  - *Properties*:
+
+  #figure(
+    table(
+      columns: (1.1fr,1.1fr,1.1fr,0.7fr),
+      inset: 5pt,
+      align: horizon,
+      fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+      table.header(
+        [*Completeness*], [*Time*], [*Space*],[*Optimality*]
+      ),
+      [YES, unless there are infinitely many nodes with $f <= f(G)$],
+      [Exponential in [relative error in $h times$ length of solution]],
+      [Keeps all nodes in memory],
+      [YES],
+    ),
+    caption: [
+      $A^*$ properties table
+    ]
+) 
+\
+  - #underline()[*NOTE*]: _$A^*$ is not only optimal but also no other algorithm is guaranteed to expand fewer nodes than $A^*$, in fact any algorithm that doesn't expand all nodes with $f(n)<C*$ ($C*$ being the total cost of the optimal solution path) runs the risk of missing the optimal solution._
+
+As we can understand though $A^*$ has a major memory issue being exponential in space and it could happen that the memory is filled up before finding a solution.
+
+- *Iterative Deepening $A^*$ (IDA\*)*: To solve the memory issue we have a twist to the classic $A^*$ algorithm. This  alternative behaves just like $A^*$ but it adds a *cutoff* value initialized at 0 and updated during the execution of the algorithm.
+  - *How it works*:
+    - _We initialize the cutoff value at 0 for $f$_.
+    - _During an iteration a node $n$ is not inserted in the queue if its $f$ value  is larger than the cutoff value._
+    - _When the queue is emptied and no goal was found we start a new iteration and we update the cutoff value._ 
+$ "cutoff"_(i+1) = min{f(n) | f(n) > "cutoff"_i} $
 #pagebreak()
