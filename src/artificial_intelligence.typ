@@ -1,7 +1,6 @@
 #import "../templates/frontpage.typ": frontpage
 #import "../templates/style.typ": style
 #import "../templates/index.typ": index
-#import "../templates/please_note.typ": please_note
 
 #set text(font: "Google Sans", size: 12pt)
 
@@ -357,8 +356,10 @@ def graph_search(problem):
 )
 
 == Uninformed Search Strategies
-\
-- *Breadth-First Search (BFS)*: It's a search strategy in which we explore the state space *level by level*, it widens its net outward from the root.
+
+=== Breadth First Search (BFS)
+
+It's a search strategy in which we explore the state space *level by level*, it widens its net outward from the root.
   - *Frontier*: It's a *FIFO Queue* where the oldest nodes are the ones explored first.
   - *How it works*:
     - _Start from root_.
@@ -372,8 +373,10 @@ def graph_search(problem):
     BFS schema
   ]
 )
-\
-- *Uniformed-Cost Search (UCS)*: It's mostly known as the *Dijkstra's Algorithm* and it's a search strategy designed to find the cheapest path to a goal, unlike BFS that expands the shallowest node UCS expands the cheapest node.
+
+=== Uniformed-Cost Search (UCS)
+
+It's mostly known as the *Dijkstra's Algorithm* and it's a search strategy designed to find the cheapest path to a goal, unlike BFS that expands the shallowest node UCS expands the cheapest node.
   - *Frontier*: It's a *Priority Queue* where the nodes are ordered based on the cost spent to arrive there from the start (the function $g(n)$) which is memorized by every node.
   - *How it works*:
     - _Pop the node from the frontier with lowest $g(n)$._
@@ -386,8 +389,10 @@ def graph_search(problem):
     Dijkstra's algorithm schema
   ]
 )
-\
-- *Depth-First Search (DFS)*: It's the exact opposite approach of BFS, DFS goes as deep as possible in a branch before backtracking.
+
+=== Depth First Search (DFS)
+
+It's the exact opposite approach of BFS, DFS goes as deep as possible in a branch before backtracking.
   - *Frontier*: It's a *LIFO Stack*, which means that the most recently generated child is the one being explored first.
   - *How it works*:
     - Start from root and dive down from first child.
@@ -399,8 +404,10 @@ def graph_search(problem):
     DFS schema
   ]
 )
-\
-- *Iterative Deepening Search (IDS)*: It's a search strategy designed to get the memory usage of DFS and the completeness of BFS.
+
+=== Iterative Deepening Search (IDS)
+
+It's a search strategy designed to get the memory usage of DFS and the completeness of BFS.
   - *How it works*: Instead of running a single massive search it runs a series of *Depth-Limited Searches (DLS)* increasing the depth limit along the way.
     - _*$"DL" = 0$*: Only check the root._
     - _*$"DL" = 1$*: Go down to only the root's children level checking if the goal is there, if it fails increment depth._
@@ -411,8 +418,10 @@ def graph_search(problem):
     IDS schema
   ]
 )
-\
-- *Bidirectional Search*: It's a search strategy that divides the search into two separate searches:
+
+=== Bidirectional Search
+
+It's a search strategy that divides the search into two separate searches:
   - *Forward Search*: Start from the initial state and moves forward to the goal.
   - *Backward Search*: Start from the goal state and move backward to the initial state.
   The search will stop when the two meet in the middle.
@@ -427,9 +436,9 @@ def graph_search(problem):
     Bidirectional Search schema
   ]
 )
-\
 
-- *Evaluation Table*:
+
+=== Evaluation Table
 
 #figure(
     table(
@@ -487,7 +496,9 @@ def graph_search(problem):
 
 It's a type of searching strategies where we exploit information on the problem, called *heuristics*, beforehand.
 
-- *Best-first Search*: It's the first informed search strategy we see and it relies on a *heuristic function* $h(n)$ which estimates the coast from the current node $n$ to the closest goal.
+=== Best-first Search
+
+It's the first informed search strategy we see and it relies on a *heuristic function* $h(n)$ which estimates the coast from the current node $n$ to the closest goal.
   - *Greedy Choice*: At every step the algorithm decides to expand the node that has the lowest heuristic function value.
 
   - *Difference from Dijkstra*: The heuristic function looks forward into the graph to estimate the cost while dijkstra looks backward to calculate the "price" already spent.
@@ -498,8 +509,10 @@ It's a type of searching strategies where we exploit information on the problem,
     Best-first search example schema
   ]
 )
-\
-- *$A^*$ Search*: It's the gold standard for pathfinding and graph traversal algorithms combining the exact cost tracking of Dijkstra's Algorithm and the heuristics of Best-first Search. It works following its *core formula*: $ f(n) = g(n) + h(n) $ where:
+
+=== A\* Search
+
+It's the gold standard for pathfinding and graph traversal algorithms combining the exact cost tracking of Dijkstra's Algorithm and the heuristics of Best-first Search. It works following its *core formula*: $ f(n) = g(n) + h(n) $ where:
 
   - *Past Cost $g(n)$*: The exact accumulated cost inherited from the Dijkstra's Algorithm.
 
@@ -520,7 +533,7 @@ It's a type of searching strategies where we exploit information on the problem,
 
   - *Admissible Heuristics*: The heuristic #underline()[never] overestimate the actual cost to reach the goal. $ h(n) <= h^* (n) $ where $h^*(n)$ is the absolute cheapest cost.  
 #figure(
-  image("asset/artificial-intelligence-18.jpg", width: 75%),
+  image("asset/artificial-intelligence-18.jpg", width: 70%),
   caption: [
     $A^*$ search example
   ]                               
@@ -531,7 +544,7 @@ It's a type of searching strategies where we exploit information on the problem,
     - *Proof*: Let's suppose that some suboptimal goal $G_2$ has been generated and is in the queue, also let $n$ be an unexpanded node on a shortest path to an optimal goal $G$.
     
   #figure(
-    image("asset/artificial-intelligence-19.png", width: 50%),
+    image("asset/artificial-intelligence-19.png", width: 40%),
     caption: [
       Optimality of $A^*$ tree search
     ]
@@ -544,7 +557,7 @@ It's a type of searching strategies where we exploit information on the problem,
   $ Since $f(G_2) > f(n)$, $A^*$ will never select $G_2$ for expansion.
 #align(right)[$square.filled$]
 
-- _Does this proof work also for Graph Search?_ \ \ *NO* because the previous proof relies on the basis that every node path is explored #underline()[independently] which is ok for tree search but for graph search is not because it introduces the *explored set* to avoid duplicate work, which creates a major problem for $A^*$:
+- _Does this proof work also for Graph Search?_ \ \ *NO*, because the previous proof relies on the basis that every node path is explored #underline()[independently] which is ok for tree search but for graph search is not because it introduces the *explored set* to avoid duplicate work, which creates a major problem for $A^*$:
   
   - *The Reopening Problem*: _What if a suboptimal path reaches a state first and expands it pushing that state into the explored set?_ Well, if the actual optimal path to that state is discovered later it will be thrown away and the algorithm will possibly miss the true optimal solution.
 
@@ -559,7 +572,7 @@ It's a type of searching strategies where we exploit information on the problem,
     $ which, if we look at it geometrically, is basically saying that the heuristics function in a graph has to always be compliant to the *triangle inequality principle*.
 
     #figure(
-      image("asset/artificial-intelligence-20.png", width: 25%),
+      image("asset/artificial-intelligence-20.png", width: 20%),
       caption: [
         Geometrical visualization of consistent heuristics
       ]
@@ -567,8 +580,8 @@ It's a type of searching strategies where we exploit information on the problem,
 
   - *Lemma*: $A^*$ expands nodes in order of increasing $f$ value, it gradually adds "*$f$ contours*" of nodes where che contour $i$ has all nodes with *$f = f_i$* where *$f_i < f_(i+1)$*.
   
-  #figure(
-  image("asset/artificial-intelligence-21.png", width: 70%)
+#figure(
+  image("asset/artificial-intelligence-21.png", width: 80%)
 )
 
   - *Properties*:
@@ -592,14 +605,152 @@ It's a type of searching strategies where we exploit information on the problem,
     ]
 ) 
 \
-  - #underline()[*NOTE*]: _$A^*$ is not only optimal but also no other algorithm is guaranteed to expand fewer nodes than $A^*$, in fact any algorithm that doesn't expand all nodes with $f(n)<C*$ ($C*$ being the total cost of the optimal solution path) runs the risk of missing the optimal solution._
+  - #underline()[*NOTE*]: _$A^*$ is not only optimal but also no other algorithm is guaranteed to expand fewer nodes than $A^*$, in fact any algorithm that doesn't expand all nodes with $f(n)<C^*$ ($C^*$ being the total cost of the optimal solution path) runs the risk of missing the optimal solution._
 
 As we can understand though $A^*$ has a major memory issue being exponential in space and it could happen that the memory is filled up before finding a solution.
 
-- *Iterative Deepening $A^*$ (IDA\*)*: To solve the memory issue we have a twist to the classic $A^*$ algorithm. This  alternative behaves just like $A^*$ but it adds a *cutoff* value initialized at 0 and updated during the execution of the algorithm.
+=== Iterative Deepening A\* (IDA\*)
+
+To solve the memory issue we have a twist to the classic $A^*$ algorithm. This  alternative behaves just like $A^*$ but it adds a *cutoff* value initialized at 0 and updated during the execution of the algorithm.
   - *How it works*:
     - _We initialize the cutoff value at 0 for $f$_.
     - _During an iteration a node $n$ is not inserted in the queue if its $f$ value  is larger than the cutoff value._
     - _When the queue is emptied and no goal was found we start a new iteration and we update the cutoff value._ 
 $ "cutoff"_(i+1) = min{f(n) | f(n) > "cutoff"_i} $
+
+=== Recursive Best-first Search (RBFS)
+
+It's an algorithm designed to mimic the behaviour of standard best-first search while using linear space like depth first search. The way it does that is by keeping track of the *best alternative path* avaiable from any ancestor and, if the current path starts looking worse than the alternative it aborts said path and tries the alternative.
+
+- *How it works*:
+  - _Every recursive call keeps a ``` f-limit``` argument that represent the maximum ``` f-value``` it's allowed to explore before aborting._
+  - *Expanding and Updating*:
+    - _Generates the children of the current node and calculates their ``` f-value``` and sorts them by it._
+    - _If the best child has a ``` f-value``` greater than the current ``` f-limit``` then we abort and go back to the parent which now knows that that is a "bad" path._
+    - _If a child is explored then its ``` f-value``` is updated to reflect the best ``` f-value``` of its descendants._
+
+
+```py
+def recursive_best_first_search(problem):
+  return rbfs(problem, make_node(problem.initialState(), inf))
+
+def rbfs(problem, node, f_limit):
+  if problem.goalTest(node.State()):
+    return Solution(node)
+  successors = []
+  for action in problem.Actions(node.State()):
+    successors.append(Node(problem, node, action))
+  if successors.isEmpty():
+    return ("Failure", inf)
+  for s in successors:
+    s.f = max(s.g + s.h, node.f)
+  while True:
+    best = min_fvalue(successors)
+    if best.f > f_limit:
+      return ("Failure", best.f)
+    alternative = min_fvalue(successors - best)
+    result, best.f = RBFS(problem, best, min(f_limit, alternative))
+    if result != "Failure":
+      return result
+```
+
+#figure(
+  image("asset/artificial-intelligence-22.png", width: 80%),
+  caption: [
+    RBFS example
+  ]
+)
+
+- #underline()[*NOTE*]: RBFS is like A\*, it's optimal if the heuristic function $h(n)$ is consistent.
+
+#figure(
+    table(
+      columns: (1.1fr, 1.1fr, 1.1fr, 0.7fr),
+      inset: 5pt,
+      align: horizon,
+      fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+      table.header(
+        [*Completeness*], [*Time*], [*Space*], [*Optimality*]
+      ),
+      [YES \ *(if step costs $> epsilon > 0$)*],
+      [Exponential \ $O(b^d)$ in worst case],
+      [Linear \ $O(b \cdot d)$],
+      [YES \ *(if heuristic is admissible)*],
+    ),
+    caption: [
+      RBFS (Recursive Best-First Search) properties table
+    ]
+)
+
+=== Simplified MA\*
+
+It behaves just like A\* but to proceed it needs to remove from the queue an old node to make space for the new node.
+  - It removes the node with the worst ``` f-value```.
+  - The ``` f-value``` of the removed node is backed up to its parent node.
+  - The parent node will eventually be expanded when al the other paths are worst.
+
+  #figure(
+    image("asset/artificial-intelligence-23.png", width: 70%),
+    caption: [
+      Simplified MA\* example 1
+    ]
+  )
+
+  #figure(
+    image("asset/artificial-intelligence-24.png", width: 70%),
+    caption: [
+      Simplified MA\* example 2
+    ]
+  )
+- *Special Case*: _What happens if all the nodes in the queue have the same ``` f-value```?_ Well, SMA\* should not select the same node for deletion *and* expansion.
+  - *Policy*:
+    - _Delete the oldest worst node and expand the newest best node and if these coincide then the current search tree must be a single path from root to the node that fills all of memory, so unless the node is a goal then we can discard it because even if it is on a optimal solution path we get that that solution isn't reachable with the avaiable information._
+
+- *Properties*:
+  - *Complete*: Only if the solution can be kept in memory.
+  - *Optimal*: If any optimal solution is reachable, otherwise it returns the best reachable solution.
+
+=== Heuristics Construction
+
+An admissible heuristics never overestimates the true cost of the goal. A way to construct admissible heuristics is by #underline()[relaxing the rules] of the original problem.
+
+- *Core Principle*:
+  - *Relaxation*: Removing constraints from a problem makes it easier to solve.
+  - *Rule*: The optimal solution cost of a relaxed problem is never greater than the optimal cost of the real. 
+
+$ "Cost"_"Relaxed" <= "Cost"_"Real" $
+
+- *Example: Travelling Salesman Problem*: We need to find the shortest tour visiting all cities exactly once.
+
+#figure(
+  image("asset/artificial-intelligence-25.png", width: 70%),
+  caption: [
+    Traveling Salesman Problem example
+  ]
+)
+
+We compute the *minimum spanning tree* of the graph in $O(n^2)$ to find a lower bound on the shortest tour.
+
+== Local Search and Iterative Improvement
+
+Unlike path based algorithms, local search is used when the path taken to reach the solution doesn't matter but only the final goal configuration.
+
+- *State Space*: Set of complete configurations.
+- *Objective*: Find an optimal configuration.
+- *Operation*: It starts with a single current state and iteratively moves to neighbouring states to improve its quality.
+
+- *Advantages*:
+  - *Space*: constant, $O(1)$.
+  - *Online & Offline Execution*: It is suitable for continuous real-time execution in dynamic environments.
+
+=== Hill-Climbing
+
+
+
+=== Simulated Annealing
+
+=== Local Beam Search
+
+=== Genetic Algorithm
+
 #pagebreak()
