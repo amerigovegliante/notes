@@ -581,7 +581,7 @@ It's the gold standard for pathfinding and graph traversal algorithms combining 
   - *Lemma*: $A^*$ expands nodes in order of increasing $f$ value, it gradually adds "*$f$ contours*" of nodes where che contour $i$ has all nodes with *$f = f_i$* where *$f_i < f_(i+1)$*.
   
 #figure(
-  image("asset/artificial-intelligence-21.png", width: 80%)
+  image("asset/artificial-intelligence-21.png", width: 60%)
 )
 
   - *Properties*:
@@ -655,7 +655,7 @@ def rbfs(problem, node, f_limit):
 ```
 
 #figure(
-  image("asset/artificial-intelligence-22.png", width: 80%),
+  image("asset/artificial-intelligence-22.png", width: 70%),
   caption: [
     RBFS example
   ]
@@ -690,14 +690,14 @@ It behaves just like A\* but to proceed it needs to remove from the queue an old
   - The parent node will eventually be expanded when al the other paths are worst.
 
   #figure(
-    image("asset/artificial-intelligence-23.png", width: 70%),
+    image("asset/artificial-intelligence-23.png", width: 60%),
     caption: [
       Simplified MA\* example 1
     ]
   )
 
   #figure(
-    image("asset/artificial-intelligence-24.png", width: 70%),
+    image("asset/artificial-intelligence-24.png", width: 60%),
     caption: [
       Simplified MA\* example 2
     ]
@@ -723,7 +723,7 @@ $ "Cost"_"Relaxed" <= "Cost"_"Real" $
 - *Example: Travelling Salesman Problem*: We need to find the shortest tour visiting all cities exactly once.
 
 #figure(
-  image("asset/artificial-intelligence-25.png", width: 70%),
+  image("asset/artificial-intelligence-25.png", width: 60%),
   caption: [
     Traveling Salesman Problem example
   ]
@@ -745,12 +745,237 @@ Unlike path based algorithms, local search is used when the path taken to reach 
 
 === Hill-Climbing
 
+The *Hill-Climbing* algorithm is a foundational local search algorithm whose idea is not to care about the path to the solution but rather the final state itself.
 
+- *How it works*:
+  - _Start at a #underline()[random] state._
+  - _Evaluate all the other states reachable with a single action (called neighbouring states)._
+  - _If a neighbour improves the objective function more than the current state, move to it._
+  - _If not a single neighbour improves the objective function then we stop and return the current state as the solution._
 
+```py 
+def hill_climbing(problem):
+  current = make_node(problem.InitialState())
+  while True:
+    neighbour = max_neighbour(curr.Neighbours())
+    if neighbour.value <= current.value:
+      return current.State()
+    current = neighbour
+```
+
+- *Traps*: This algorithm is prone to traps being purely of the greedy type.
+
+  - *Local Maxima*: If the algorithm reaches a peak that is higher than all its immediate neighbours but lower than the global maxima it gets stuck missing the true best solution.
+  - *Ridges*: They are a sequence of local maxima that slope up and curve. If the layout of the objective function forms a narrow ridge we have that then every immediate neighbour might lead downward or sideways trapping the algorithm even though the path tends to go upward.
+  - *Plateau*: It's a flat area where the evaluation value is uniform so the algorithm gets stuck because there are no steps that improbe the objective function, it is basically a "flat local maxima".
+
+- *Alternatives to fix the Traps*:
+  
+  - *Plateaux Fix*: We can fix that by allowing *side moves* which that don't improve the objective function but can lead to having neighbouring states that do, to avoid loops we can put a limit to the maximum quantity of side moves allowed but knowing that with a long enough plateaux the trap might still exist.
+
+  - *Local Maxima Fixes*:
+
+    - *Stochastic Hill-Climbing*: It chooses at random among uphill moves that improve the objective function value, we can also weigh the probability of selection depending on the steepness of the uphill move.
+
+    - *Random-Restart Hill Climbing*: It conducts multiple hill-climbing searches from randomly generated states. If we call $p$ the probability to find an optimal solution for a single search then we have that the expected number of searches needed to find an optimal solution is $frac(1, p)$.
+      - *How do we know?*: Let's consider random binary variables $x_i$ such that $ x_i = cases(0 "if i-th search does not find an optimal solution", 1 "if i-th search does find an optimal solution") $ 
+      We also know that $ forall i " " P(x_i = 1) = p and P(x_i = 0) = 1-p $ Moreover we know that $x_i$ are *mutually independent*.\
+      Then we have the *Bernoulli Process* for which the expected number of searches before finding the optimal solution follows a *Geometric Distribution*.\
+      In fact, the probability that the k-th search is the first to find a optimal solution is: $ P((sum^infinity _(j=1) x_j = 0) and (x_k = 1)) = (1 - p)^(k-1)p $ Then we can obtain the value of the quantity we are interested in: $ sum ^infinity _(k=1) k(1-p)^(k-1)p &= p sum ^infinity _(k=1) k(1-p)^(k-1)\ &=-p sum ^infinity _(k=1) frac(d(1-p)^k, d p)\ &= -p frac(d, d p)(sum ^infinity _(k=0) (1-p)^k - 1) = -p frac(d, d p)(1/p - 1)\ &= p 1/p^2 = 1/p $
+
+- *Empirical Performance Example* (State Space $approx 17$ billion states):
+  
+  #figure(
+    table(
+      columns: (1.6fr, 0.9fr, 1.1fr, 1.1fr, 1.2fr, 1.2fr),
+      inset: 6pt,
+      align: horizon,
+      fill: (col, row) => if row == 0 or col == 0 { rgb("f0f0f0") } else { none },
+      table.header(
+        [*Algorithm Variant*], [*Optimal Rate ($p$)*], [*Success Steps*], [*Suboptimal Steps*], [*Searches Needed*], [*Total Expected Steps*]
+      ),
+      [*Standard \ Hill-Climbing*], [14%], [4 steps], [3 steps], [--], [--],
+      [*Hill-Climbing with \ Sideways Moves * \ ($approx 100$ moves)], [94%], [21 steps], [64 steps], [--], [--],
+      [*Random-Restart \ Hill-Climbing*], [14%)], [4 steps], [3 steps], [$approx 7$ \ ($6.14$ failures)], [22.43],
+      [*Random-Restart \ Hill-Climbing with \ Sideways Moves*], [94%], [21 steps], [64 steps], [$approx 1.06$ \ ($0.06$ failures)], [25.08],
+    ),
+    caption: [Hill-climbing and Random-Restart performance statistics]
+  )
+  
 === Simulated Annealing
+
+It's an important local search algorithm that was created to avoid the traps of hill-climbing, the core difference is that Hill-Climbing accepts only moves that improve the objective function while Simulated Annealing introduces some randomness through the concept of *temperature*.
+
+- *How it works*:
+  - _Start from a random state and high temperature._
+  - _Chooses a random neighbour._
+  - _We evaluate the improvement $Delta E$ with the random neighbour, if it's better the action is accepted always, if it's worse then it *could* still be accepted with a certain probability._
+    - *Probability*: $ P = e ^ (frac(Delta E, T)) $
+
+```py
+def simulated_annealing(problem, schedule):
+  current = problem.InitialState()
+  for t in range(1,inf):
+    T = schedule(t)
+    if T == 0:
+      return current
+    next = current.random_successor()
+    diff_E = current.value - next.value
+    if diff_E > 0:
+      current = next
+    else:
+      current = next
+      current.probability = e ^ (diff_E / T)
+```
+
+- *Properties*: 
+  - At fixed temperature $T$, state occupation probability reaches the Boltzmann distribution $ p(x) = alpha e ^(-E(x) / (k T)) $
+  - $T$ decreased slowly enough means that we will always reach best state $x^*$ because $ frac(e ^ (frac(-E(x^*), k T)), e^(frac(-E(x), k T))) = e ^ (frac(E(x) - E(x^*), k T)) >> 1 "for small T." $
 
 === Local Beam Search
 
+The idea is to keep track of a population of $k$ states #underline()[simultaneously] rather than tracking a single state.
+
+- *How it works*:
+  - _Generates k states uniformly at random within the state space._
+  - _At each iteration t < T (max iterations number) we generate the complete set of valid successors for all k current states and compute:_
+    - _Evaluate the objective function for every generated successor._
+    - _If any successor satisfies the goal condition return the state and terminate._
+    - _If not, select the top k states with the highest objective function values from the combined pool of all generated successors. Discard the remaining._
+  - _Repeat until a termination condition is met._
+
+- *Problem*: Often, all $k$ states end up on the same local hill.
+
+  - *Stochastic Local Beam Search*: Instead of choosing $k$ successors, we choose $k$ random successors with the random being biased towards "good successors".
 === Genetic Algorithm
+
+It's a category of algorithms inspired by natural selection and evolutionary biology. In practice, it's a variant of stochasitc local beam search in which successor states are generated by combining two "parent states" rather than modifying a single state through local perturbations.
+
+- *How it works*:
+- _Evaluate fitness for every individual._
+  - _If an acceptable solution is reached return the best individual._
+- _Select randomly with bias toward higher fitness pairs of parents from the population to reproduce._
+- _For each selected parent couple we choose a set of crossover points (1 or more) along its representing datastructure (called genome) and then we combine them to produce two children."_
+
+  - *NOTE*: The more crossover points are chosen, the more mixed up the genomes of the children will be.
+- _With low and independent probability $p_m$ (called mutation rate) some parts of a child genome might be changed._
+- _Repeat._
+
+```py
+def genetic_algorithm(population, fitness_fn, mutation_rate=0.05, max_iterations=1000):
+    for _ in range(max_iterations):
+        best_individual = max(population, key=fitness_fn)
+        if fitness_fn(best_individual) >= 100: 
+            return best_individual
+        fitness_values = [fitness_fn(ind) for ind in population]
+        total_fitness = sum(fitness_values)
+        if total_fitness == 0:
+            weights = [1 / len(population)] * len(population)
+        else:
+            weights = [f / total_fitness for f in fitness_values]
+        population2 = []
+        for _ in range(len(population)):
+            parent1, parent2 = random.choices(population, weights=weights, k=2)
+            child = reproduce(parent1, parent2)
+            if random.random() < mutation_rate:
+                child = mutate(child)
+            population2.append(child)
+        population = population2
+    return max(population, key=fitness_fn)
+
+def reproduce(parent1, parent2):
+    n = len(parent1)
+    c = random.randint(1, n - 1)
+    return parent1[:c] + parent2[c:]
+```
+#figure(
+  image("asset/artificial-intelligence-26.png", width: 75%),
+  caption: [
+    Genetic Algorithm example
+  ]
+)
+
+=== Gradient Descent
+
+It's the continuous domain counterpart to hill-climbing, meaning that while hill-climbing evaluates a set of neighbouring states, gradient descent uses gradients to navigate continuous state spaces.
+
+- *Calcus Reminder*:
+  - *Gradient*: A gradient $nabla f$ is a vector of the first-order partial derivatives of a multivariable function $f(x_1,...,x_n)$. $ nabla f = (frac(partial f, partial x_1), frac(partial f, partial x_2), ..., frac(partial f, partial x_n)) $ This vector is useful in this context because it points to the direction of the *steepest ascent*. 
+
+- *How it works*:
+  - _List all the independent variables upon which $f$ depends._
+  - _Compute partial derivatives._
+  - _Construct gradient vector $nabla f$._
+    - _If instead of the steepest ascent you need the steepest descent you compute $- nabla f$ _
+  - _Compute the step:_ $ "Step Vector" = alpha nabla f(x^(\(t\))) $
+  - _Update for each iteration $t < T$:_ $ x^(\(t+1\)) = x^(\(t\)) plus.minus alpha nabla f(x^(\(t\))) $
+  - _Check Convergence:_ $ norm(nabla f(x^(\(t\)))) < epsilon $ Where $epsilon$ is a tolerance we use to determine when the gradient vector is very close to 0, meaning we reached a local minimum, maximum or a saddle point.
+```py
+def objective_function(x):
+    return x[0] ** 2 + 10 * (x[1] ** 2)
+
+
+def compute_gradient(x):
+    return np.array([2 * x[0], 20 * x[1]], dtype=float)
+
+
+def gradient_descent(initial_state, learning_rate=0.05, max_iterations=100, tolerance=1e-6):
+    x = np.array(initial_state, dtype=float)
+
+    for t in range(max_iterations):
+        grad = compute_gradient(x)
+        grad_norm = np.linalg.norm(grad)
+
+        if grad_norm < tolerance:
+          break
+
+        x = x - learning_rate * grad
+
+    return x, objective_function(x)
+```
+
+#figure(
+  image("asset/artificial-intelligence-27.png", width: 60%),
+  caption: [
+    Gradient descent example graph
+  ]
+)
+
+== Online Search
+
+This category of algorithms is used when the environment is *not completely observable* or changes by the course of time, which means that the agent needs to interact with the environment to extract essential informations otherwise:
+
+- It's not possible to compute a complete solution before acting.
+- The agent is forced to alternate betweem computation and action.
+
+In fact, online search is particularly good for #underline()[exploration problems].
+
+- #underline()[*Theoretical Example*]:
+
+  As we can see in @online-search-ex we need to go from position $S = (1,1)$ to $G = (3,3)$. But how? 
+
+  #figure(
+    image("asset/artificial-intelligence-28.png", width: 35%),
+    caption: [
+      Online Search theoratical example
+    ]
+  ) <online-search-ex>
+
+  Well, we assume that we have a deterministic and fully observable environment but the agent knows only:
+
+    - $"Actions"(s)$: Returns a list of allowed actions in the state $s$.
+    - $c(s, a, s')$: Which is the step function.
+    - $"GoalTest"(s)$: Which verifies wether the state $s$ is goal.
+- #underline()[*NOTE*]: If some actions are irreversible then online search might reach a dead-end stat, this is unavoidable even for safely explorable state spaces.
+
+The performance of Online Search algorithms is measured through *Competitive Ratio*:$ "Competitive Ratio" = frac("total path cost with online search", "total path cost knowing the state space in advance") $
+
+=== Depth-first Online Search
+
+Considering that Depth-first search is local then it applies natually to online search.
+
+```py
+def online_dfs_agent()
+```
 
 #pagebreak()
