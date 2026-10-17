@@ -26,35 +26,94 @@
 #set page(numbering: "1")
 #counter(page).update(1)
 
-= Machine Learning Basics
-#pagebreak()
-
-= Introduction
-#pagebreak()
-
 = Image Filtering and Edges
-#pagebreak()
 
-= Convolution
-#pagebreak()
+== Images and Color Spaces
 
-= Keypoints and Local Visual Features
-#pagebreak()
+Images can have three different type of colorations:
 
-= Bag of Visual Words
-#pagebreak()
+- *Binary*: It's basically a grid of just 0s an 1s where 0 means white and 1 means black.
 
-= Convolutional Neural Networks
-#pagebreak()
+#figure(
+  image("asset/computer-vision-1.png", width: 60%),
+  caption: [
+    Binary image grid explanation
+  ]
+)
+- *Gray Scale*: Works similarly to a binary image with the difference being that each tile of the grid has a value in the range $[0,255]$ that represents the intensity.
 
-= Object Detection and Segmentation
-#pagebreak()
+#figure(
+  image("asset/computer-vision-2.png", width: 60%),
+  caption: [
+    Grayscale image grid explanation
+  ]
+)
 
-= Predictive Vision
-#pagebreak()
+- *Color*: Each tile has a defined color representation model (called *color space*) that can be different depending on the context of the image. 
 
-= 3D Vision-Language Models
-#pagebreak()
+  - These color spaces are for example: RGB / sRGB, HSV, Lab, YCbCr, CMYK, ...
 
-= Embodied AI and Visual Navigation
+    - HSV (Hue, Saturation, Value) corresponds better to how people experience colors.
+#figure(
+  image("asset/computer-vision-3.png", width: 60%),
+  caption: [
+    RGB Image explanation
+  ]
+)
+
+== Image Sampling
+
+When we zoom-in into an image we capture pixels that, because they need to be represented into a computer, they generate sampling error.
+
+#figure(
+  image("asset/computer-vision-4.png", width: 50%),
+  caption: [
+    Sampling error explanation
+  ]
+)
+
+- *Resolution*: It's a sampling parameter, defined as dots per inch (dpi) or, more generally, as the spatial pixel density.
+
+#figure(
+  image("asset/computer-vision-5.png", width: 50%),
+  caption: [
+    DPI schematics
+  ]
+)
+
+- *Image Histograms*: They are very simple image representations that capture the global distribution of gray levels in a given image.
+
+#figure(
+  image("asset/computer-vision-6.png", width: 65%),
+  caption: [
+    Grayscale image histogram
+  ]
+)
+
+#figure(
+  image("asset/computer-vision-7.png", width: 65%),
+  caption: [
+    Color image historgram
+  ]
+)
+\
+\ 
+It can also be done to samples inside of an image, which gives a better idea to color distribution based on location.
+
+#figure(
+  image("asset/computer-vision-8.png", width: 70%),
+  caption: [
+
+    Grayscale histograms on different samples example
+  ]
+)
+
+A useful case of usage of image histograms is done to compare two images.
+
+#figure(
+  image("asset/computer-vision-9.png", width: 60%),
+  caption: [
+    Image histogram comparison use case
+  ]
+)
 #pagebreak()

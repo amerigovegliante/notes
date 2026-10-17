@@ -744,10 +744,16 @@ def hill_climbing(problem):
 ```
 
 - *Traps*: This algorithm is prone to traps being purely of the greedy type.
-
   - *Local Maxima*: If the algorithm reaches a peak that is higher than all its immediate neighbours but lower than the global maxima it gets stuck missing the true best solution.
   - *Ridges*: They are a sequence of local maxima that slope up and curve. If the layout of the objective function forms a narrow ridge we have that then every immediate neighbour might lead downward or sideways trapping the algorithm even though the path tends to go upward.
   - *Plateau*: It's a flat area where the evaluation value is uniform so the algorithm gets stuck because there are no steps that improbe the objective function, it is basically a "flat local maxima".
+
+#figure(
+  image("asset/artificial-intelligence-26.jpg", width: 70%),
+  caption: [
+    Hill-Climbing graph
+  ]
+)
 
 - *Alternatives to fix the Traps*:
 
