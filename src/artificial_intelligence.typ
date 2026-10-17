@@ -11,7 +11,7 @@
   professors: "Prof. Sperduti Alessandro",
   year: "2026/2027",
   background1: rgb(152, 251, 203),
-  background2: rgb(253, 253, 150)
+  background2: rgb(253, 253, 150),
 )
 
 #show: style
@@ -44,7 +44,7 @@
       Structure of an agent
     ],
   )
-  The *agent function* maps from all the possible sequences of perceptions $P^*$ to actions $A$.  
+  The *agent function* maps from all the possible sequences of perceptions $P^*$ to actions $A$.
 
   - #underline()[*EXAMPLE*]: Vacuum Cleaner Agent.
     - _Perceptions_: ${"A", "B"}$
@@ -53,37 +53,35 @@
 
     - _Status_: ${"Clean", "Dirty"}$
     #figure(
-      image("asset/artificial-intelligence-2.png", width:50%),
+      image("asset/artificial-intelligence-2.png", width: 50%),
       caption: [
         Vacuum cleaner agent example
-      ]
+      ],
     )
   #figure(
-  table(
-    columns: (1fr, 0.5fr),
-    inset: 10pt,
-    align: horizon,   
-    fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
-    table.header(
-      [*Percept Sequence*], [*Action*],
+    table(
+      columns: (1fr, 0.5fr),
+      inset: 10pt,
+      align: horizon,
+      fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+      table.header([*Percept Sequence*], [*Action*]),
+      $
+        ["A, Clean"]\
+        ["A, Dirty"]\
+        ["B, Dirty"]\
+        ...\
+      $,
+      $
+        "Right"\
+        "Suck"\
+        "Left"\
+        ...
+      $,
     ),
-    $
-      ["A, Clean"]\
-      ["A, Dirty"]\
-      ["B, Dirty"]\
-      ...\
-    $,
-    $
-      "Right"\
-      "Suck"\
-      "Left"\
-      ...  
-    $
-  ),
-  caption: [
-    Vacuum cleaner agent example
-  ]
-)
+    caption: [
+      Vacuum cleaner agent example
+    ],
+  )
 
 ```py
   def reflex_vacuum_agent(location, status):
@@ -94,7 +92,7 @@
     elif location == "B":
       return "Left"
 ```
-  
+
 - *Rationality*: It's a measure of performances set for an agent that evaluates the sequence of perceptions, it can be different based on the agent goalas and its context.\ A *rational agent* chooses any action that maximizes the expected value of the performance measure #underline()[based on the sequence of perceptions obtained up to the current instant.]
 
   - Rationality $==>$ Exploration, Learning, Autonomy.
@@ -107,27 +105,27 @@
   - *Actuators*: They are the components that the agent uses uses to perform actions and interact with the evironment. They convert decisions into actions.
 
   - *Sensors*: They are the components that collect informations from the environment and provide them to the agent in order for it to make appropriate decisions.
-      
+
 After all this we can say that agents can be summarized with this simple formula:
 
 $ "Agent = Architecture + Program" $
 
 Where:
-  - *Architecture*: It's the physical infrastructure supporting the execution of the program.
+- *Architecture*: It's the physical infrastructure supporting the execution of the program.
 
-  - *Program*: Is the entity that take the current percept as input from the sensors and return an action to the actuators.
+- *Program*: Is the entity that take the current percept as input from the sensors and return an action to the actuators.
 
-  ```py
-  percepts = []                      # A sequence, initially empty.
-  table = [...]                         # Table of actions, indexed by percept sequences. 
-  def table_driven_agent(percept):
+```py
+percepts = []                      # A sequence, initially empty.
+table = [...]                         # Table of actions, indexed by percept sequences.
+def table_driven_agent(percept):
 
-    global percepts, table
+  global percepts, table
 
-    percepts.append(percept)
-    action = lookup(percepts, table)
-    return action
-  ```
+  percepts.append(percept)
+  action = lookup(percepts, table)
+  return action
+```
 
 == Types of Agents & Environments
 \
@@ -145,7 +143,7 @@ Where:
     image("asset/artificial-intelligence-3.png", width: 50%),
     caption: [
       Simple Reflex Agent Schema
-    ]
+    ],
   )
 
 - *Model-Based Reflex Agents*: They are a more "complex" version of Simple Reflex Agents which, as we said before, are agents that only have the context of the current perception, Model-based Reflex Agents also mantain an internal representation (called *model*) of the environment which allows them to anticipate the consequences of their actions.
@@ -154,7 +152,7 @@ Where:
   image("asset/artificial-intelligence-4.png", width: 50%),
   caption: [
     Model-based Reflex Agent Schema
-  ]
+  ],
 )
 - *Goal-based Agents*: They are agents designet to plan, execute, and adjust their actions dynamically to meet predefined goals. It's a useful approach in enviroments where adaptability is fundamental.
   - *Goal*: It's a specific objective for the agent to achieve, the goal itself also provides clear directions for the agent's decisions and actions.
@@ -163,14 +161,14 @@ Where:
   - *Planning*: It's the phase of determining the sequence of actions required to achieve the goal.
 
   - *Execution*: It's the phase where the agent actually execute the planned actions.
-  
+
   - *Adaptation*: During execution the agent might encounter obstacles or changes, this phase is required in order for the agent to modify its plans and actions dynamically in order to still achieve its goal.
 
 #figure(
   image("asset/artificial-intelligence-5.png", width: 50%),
   caption: [
     Goal-based Agent Schema
-  ]
+  ],
 )
 
 - *Utility-based Agents*: They are agents that have the ability to make rational decisions based on a utility function and are designed to optimize their performance by maximizing utility measures.
@@ -181,7 +179,7 @@ Where:
   image("asset/artificial-intelligence-6.png", width: 50%),
   caption: [
     Utility-based agent schema
-  ]
+  ],
 )
 
 - *Learning Agents*: It's an entity designed to autonomously interact with its environment, it acquires informations from it and adapt its behaviour to improve performances over time. They can dynamicaly change their decision-making processes depending on experience instead of previously determined instructions.
@@ -190,7 +188,7 @@ Where:
   image("asset/artificial-intelligence-7.png", width: 50%),
   caption: [
     Learning agent schema
-  ]
+  ],
 )
 
 We can represent the environment in many ways:
@@ -199,13 +197,13 @@ We can represent the environment in many ways:
 
 - *Factored Representation*: Splits up each state into a fixed set of variables that can have a value.
 
-- *Structured Representation*: Objects and their relationships with each other can be described explicitly. 
+- *Structured Representation*: Objects and their relationships with each other can be described explicitly.
 
 #figure(
   image("asset/artificial-intelligence-8.png", width: 70%),
   caption: [
     Enviroment representations
-  ]
+  ],
 )
 
 #pagebreak()
@@ -247,7 +245,7 @@ def simple_problem_solving_agent(percept):
   image("asset/artificial-intelligence-9.png", width: 80%),
   caption: [
     Simple graph of states and actions for the romania driving example
-  ]
+  ],
 )
 
 _How do we formulate this problem formally?_
@@ -268,21 +266,25 @@ _How do we formulate this problem formally?_
 
       - $x$ is the _current state_.
       - $a$ is the _chosen action_.
-      - $y$ is the _resulting state_. 
+      - $y$ is the _resulting state_.
   - *Solution*: It's a sequence of actions that leads from the _initial state_ to the _goal state_.
 
 As we know, the real world is very complex to formulate into a problem with states, actions etc. which is why we are going to abstract the _State Space_ (e.g. Arad instead of specific locations in Arad), the _Action Space_ (e.g. simple _city-to-city_ routes instead of _street-to-street_ specifically) and _Solution_ (where a set of state must be a solution applicable to the real world).
 
-- #underline()[*EXAMPLE*]: 
+- #underline()[*EXAMPLE*]:
 #figure(
   image("asset/artificial-intelligence-10.png", width: 65%),
   caption: [
     Driving in Romania Iterations example
-  ]
+  ],
 )
 
-== Tree Search and Graph Search
-\
+#pagebreak()
+
+== Uninformed Search Strategies
+
+=== Tree Search and Graph Search
+
 - *Tree Search*: It's a _strategy_ that explores a problem's *state space* by organizing potential paths into a tree structure where the root is the initial state and the branches represent sequences of actions leading to new states. It uses a collection called *frontier* which acts as the to-do list of nodes to visit.
   - *Amnesia*: This algorithm has no memory of the states it has already visited which means that, if two different action sequences lead to the same state, they will be treated as two separated branches.
 
@@ -291,19 +293,19 @@ def tree_search(problem):
     # 1. Create a starting node using the intial state and place it into the frontier
     frontier = create_frontier()
     frontier.add(make_node(problem.initial_state()))
-    
+
     while True:
         # 2. Check if there's anywhere left to explore
         if frontier.is_empty():
             return None # Failure
-            
+
         # 3. Remove a node from the frontier for consideration
         node = frontier.pop()
-        
+
         # 4. Check if we've reached the goal
         if problem.is_goal(node.state):
             return node # Success (returns node to extract path)
-            
+
         # 5. Expand the node and add all resulting children to the frontier
         for child in node.expand(problem):
             frontier.add(child)
@@ -319,25 +321,25 @@ def graph_search(problem):
     # 1. Initialize the frontier with a node containing the initial state
     initial_node = Node(problem.initial_state())
     frontier = [initial_node]
-    
+
     # 2. Initialize the explored set to be empty
     explored = set()
-    
+
     while True:
         # 3. Check if there's anywhere left to explore
         if len(frontier) == 0:
             return None # Failure
-            
+
         # 4. Remove a node from the frontier for consideration
         node = frontier.pop()
-        
+
         # 5. Check if we've reached the goal
         if problem.is_goal(node.state):
             return node # Success (returns node to extract path)
-            
+
         # 6. Add the node to the explored set
         explored.add(node.state)
-        
+
         # 7. Expand the node and add children only if not in frontier or explored
         for child in node.expand(problem):
             state_in_frontier = any(n.state == child.state for n in frontier)
@@ -352,135 +354,121 @@ def graph_search(problem):
   image("asset/artificial-intelligence-11.png", width: 45%),
   caption: [
     Node vs State example
-  ]
+  ],
 )
-
-== Uninformed Search Strategies
 
 === Breadth First Search (BFS)
 
 It's a search strategy in which we explore the state space *level by level*, it widens its net outward from the root.
-  - *Frontier*: It's a *FIFO Queue* where the oldest nodes are the ones explored first.
-  - *How it works*:
-    - _Start from root_.
-    - _Explore all immediate children (Depth 1)._
-    - _Move to Depth 2._
-    - _Repeat._
+- *Frontier*: It's a *FIFO Queue* where the oldest nodes are the ones explored first.
+- *How it works*:
+  - _Start from root_.
+  - _Explore all immediate children (Depth 1)._
+  - _Move to Depth 2._
+  - _Repeat._
 
 #figure(
   image("asset/artificial-intelligence-12.png", width: 65%),
   caption: [
     BFS schema
-  ]
+  ],
 )
 
 === Uniformed-Cost Search (UCS)
 
 It's mostly known as the *Dijkstra's Algorithm* and it's a search strategy designed to find the cheapest path to a goal, unlike BFS that expands the shallowest node UCS expands the cheapest node.
-  - *Frontier*: It's a *Priority Queue* where the nodes are ordered based on the cost spent to arrive there from the start (the function $g(n)$) which is memorized by every node.
-  - *How it works*:
-    - _Pop the node from the frontier with lowest $g(n)$._
-    - _If it's the goal, stop and return the solution._
-    - _If not, expand it, calculate the path cost for each child and add them to the frontier._
-    - _Repeat._
+- *Frontier*: It's a *Priority Queue* where the nodes are ordered based on the cost spent to arrive there from the start (the function $g(n)$) which is memorized by every node.
+- *How it works*:
+  - _Pop the node from the frontier with lowest $g(n)$._
+  - _If it's the goal, stop and return the solution._
+  - _If not, expand it, calculate the path cost for each child and add them to the frontier._
+  - _Repeat._
 #figure(
   image("asset/artificial-intelligence-13.png", width: 45%),
   caption: [
     Dijkstra's algorithm schema
-  ]
+  ],
 )
 
 === Depth First Search (DFS)
 
 It's the exact opposite approach of BFS, DFS goes as deep as possible in a branch before backtracking.
-  - *Frontier*: It's a *LIFO Stack*, which means that the most recently generated child is the one being explored first.
-  - *How it works*:
-    - Start from root and dive down from first child.
-    - It dives to that child's first child until a dead end.
-    - When all children have been explored or a dead end has been reached we backtrack to the most recent junction.
+- *Frontier*: It's a *LIFO Stack*, which means that the most recently generated child is the one being explored first.
+- *How it works*:
+  - Start from root and dive down from first child.
+  - It dives to that child's first child until a dead end.
+  - When all children have been explored or a dead end has been reached we backtrack to the most recent junction.
 #figure(
   image("asset/artificial-intelligence-14.png", width: 65%),
   caption: [
     DFS schema
-  ]
+  ],
 )
 
 === Iterative Deepening Search (IDS)
 
 It's a search strategy designed to get the memory usage of DFS and the completeness of BFS.
-  - *How it works*: Instead of running a single massive search it runs a series of *Depth-Limited Searches (DLS)* increasing the depth limit along the way.
-    - _*$"DL" = 0$*: Only check the root._
-    - _*$"DL" = 1$*: Go down to only the root's children level checking if the goal is there, if it fails increment depth._
-    - _*Repeat* until the goal is found._
+- *How it works*: Instead of running a single massive search it runs a series of *Depth-Limited Searches (DLS)* increasing the depth limit along the way.
+  - _*$"DL" = 0$*: Only check the root._
+  - _*$"DL" = 1$*: Go down to only the root's children level checking if the goal is there, if it fails increment depth._
+  - _*Repeat* until the goal is found._
 #figure(
   image("asset/artificial-intelligence-15.png", width: 75%),
   caption: [
     IDS schema
-  ]
+  ],
 )
 
 === Bidirectional Search
 
 It's a search strategy that divides the search into two separate searches:
-  - *Forward Search*: Start from the initial state and moves forward to the goal.
-  - *Backward Search*: Start from the goal state and move backward to the initial state.
-  The search will stop when the two meet in the middle.
-  - *How it works*:
-    - _Initialize two frontier for the two searches._
-    - _Alternate expansion for both searches._
-    - _If a collision is detected form a solution from start to goal._
-    - _Repeat._
+- *Forward Search*: Start from the initial state and moves forward to the goal.
+- *Backward Search*: Start from the goal state and move backward to the initial state.
+The search will stop when the two meet in the middle.
+- *How it works*:
+  - _Initialize two frontier for the two searches._
+  - _Alternate expansion for both searches._
+  - _If a collision is detected form a solution from start to goal._
+  - _Repeat._
 #figure(
   image("asset/artificial-intelligence-16.png", width: 75%),
   caption: [
     Bidirectional Search schema
-  ]
+  ],
 )
 
 
 === Evaluation Table
 
 #figure(
-    table(
-      columns: (1fr, 0.9fr, 0.9fr, 0.9fr, 0.9fr, 0.9fr, 1fr),
-      inset: 5pt,
-      align: horizon,
-      fill: (col, row) => if row == 0 or col == 0 { rgb("f0f0f0") } else { none },
-      table.header(
-        [*Criterion*], [*BFS*], [*UCS*],[*DFS*], [*DLS*], [*IDS*],[*Bidirectional*]
-      ),
-      [*Completeness*],
-      [YES],
-      [YES],
-      [NO],
-      [NO],
-      [YES],
-      [YES],
-      [*Time*],
-      [$ O(b^d)$ ],
-      [$ O(b^(1 + floor(C^* / epsilon))) $],
-      [$ O(b^m) $],
-      [$ O(b^l) $],
-      [$ O(b^d) $],
-      [$ O(b^(d/2)) $],
-      [*Space*],
-      [$ O(b^d) $],
-      [$ O(b ^ (1 + floor(C^* / epsilon))) $],
-      [$ O(b m) $],
-      [$ O(b l) $],
-      [$ O(b d) $],
-      [$ O(b^(d/2)) $],
-      [*Optimality*],
-      [YES],
-      [YES],
-      [NO],
-      [NO],
-      [YES],
-      [YES],
-    ),
-    caption: [
-      Search Strategies Evaluation
-    ]
+  table(
+    columns: (1fr, 0.9fr, 0.9fr, 0.9fr, 0.9fr, 0.9fr, 1fr),
+    inset: 5pt,
+    align: horizon,
+    fill: (col, row) => if row == 0 or col == 0 { rgb("f0f0f0") } else { none },
+    table.header([*Criterion*], [*BFS*], [*UCS*], [*DFS*], [*DLS*], [*IDS*], [*Bidirectional*]),
+    [*Completeness*], [YES], [YES], [NO], [NO], [YES], [YES],
+    [*Time*],
+    [$O(b^d)$ ],
+    [$ O(b^(1 + floor(C^* / epsilon))) $],
+    [$ O(b^m) $],
+    [$ O(b^l) $],
+    [$ O(b^d) $],
+    [$ O(b^(d/2)) $],
+
+    [*Space*],
+    [$ O(b^d) $],
+    [$ O(b^(1 + floor(C^* / epsilon))) $],
+    [$ O(b m) $],
+    [$ O(b l) $],
+    [$ O(b d) $],
+    [$ O(b^(d/2)) $],
+
+    [*Optimality*], [YES], [YES], [NO], [NO], [YES], [YES],
+  ),
+  caption: [
+    Search Strategies Evaluation
+  ],
 )
 
 - Knowing that:
@@ -499,123 +487,117 @@ It's a type of searching strategies where we exploit information on the problem,
 === Best-first Search
 
 It's the first informed search strategy we see and it relies on a *heuristic function* $h(n)$ which estimates the coast from the current node $n$ to the closest goal.
-  - *Greedy Choice*: At every step the algorithm decides to expand the node that has the lowest heuristic function value.
+- *Greedy Choice*: At every step the algorithm decides to expand the node that has the lowest heuristic function value.
 
-  - *Difference from Dijkstra*: The heuristic function looks forward into the graph to estimate the cost while dijkstra looks backward to calculate the "price" already spent.
+- *Difference from Dijkstra*: The heuristic function looks forward into the graph to estimate the cost while dijkstra looks backward to calculate the "price" already spent.
 
 #figure(
   image("asset/artificial-intelligence-17.png", width: 70%),
   caption: [
     Best-first search example schema
-  ]
+  ],
 )
 
 === A\* Search
 
 It's the gold standard for pathfinding and graph traversal algorithms combining the exact cost tracking of Dijkstra's Algorithm and the heuristics of Best-first Search. It works following its *core formula*: $ f(n) = g(n) + h(n) $ where:
 
-  - *Past Cost $g(n)$*: The exact accumulated cost inherited from the Dijkstra's Algorithm.
+- *Past Cost $g(n)$*: The exact accumulated cost inherited from the Dijkstra's Algorithm.
 
-  - *Future Cost Estimation $h(n)$*: It's the estimated cost heuristic inherited from Best-first Search.
+- *Future Cost Estimation $h(n)$*: It's the estimated cost heuristic inherited from Best-first Search.
 
-  - *Total Estimation $f(n)$*: It represent the #underline()[estimated] cheapest cost through node $n$ to the goal.
-  \
-  - *How it works*:
-    - _Put the starting node into the frontier (a Priority Queue) ordered by the $f(n)$ value._
-    - _Pop the node with lowest $f(n)$ off the frontier._
-    - _If it's the goal state, return the solution._
-    - _If not, generate child nodes and expand like this:_
+- *Total Estimation $f(n)$*: It represent the #underline()[estimated] cheapest cost through node $n$ to the goal.
+\
+- *How it works*:
+  - _Put the starting node into the frontier (a Priority Queue) ordered by the $f(n)$ value._
+  - _Pop the node with lowest $f(n)$ off the frontier._
+  - _If it's the goal state, return the solution._
+  - _If not, generate child nodes and expand like this:_
 
-      - _$g("child") = g("parent") + "step cost"$_
-      - _$f("child") = g("child") + h("child")$_
-      _And then add them to the frontier._
-    - _Repeat._
+    - _$g("child") = g("parent") + "step cost"$_
+    - _$f("child") = g("child") + h("child")$_
+    _And then add them to the frontier._
+  - _Repeat._
 
-  - *Admissible Heuristics*: The heuristic #underline()[never] overestimate the actual cost to reach the goal. $ h(n) <= h^* (n) $ where $h^*(n)$ is the absolute cheapest cost.  
+- *Admissible Heuristics*: The heuristic #underline()[never] overestimate the actual cost to reach the goal. $ h(n) <= h^* (n) $ where $h^*(n)$ is the absolute cheapest cost.
 #figure(
   image("asset/artificial-intelligence-18.jpg", width: 70%),
   caption: [
     $A^*$ search example
-  ]                               
+  ],
 )
 \
-  - *Theorem*: $A^*$ is optimal.
+- *Theorem*: $A^*$ is optimal.
 
-    - *Proof*: Let's suppose that some suboptimal goal $G_2$ has been generated and is in the queue, also let $n$ be an unexpanded node on a shortest path to an optimal goal $G$.
-    
-  #figure(
-    image("asset/artificial-intelligence-19.png", width: 40%),
-    caption: [
-      Optimality of $A^*$ tree search
-    ]
-  )
-  \
-  $
-    f(G_2) &= g(G_2) && "since" h(G_2) = 0 \
-    &> g(G) && "since" G_2 "is suboptimal" \
-    &>= f(n) && "since" h "is admissible"
-  $ Since $f(G_2) > f(n)$, $A^*$ will never select $G_2$ for expansion.
+  - *Proof*: Let's suppose that some suboptimal goal $G_2$ has been generated and is in the queue, also let $n$ be an unexpanded node on a shortest path to an optimal goal $G$.
+
+#figure(
+  image("asset/artificial-intelligence-19.png", width: 40%),
+  caption: [
+    Optimality of $A^*$ tree search
+  ],
+)
+\
+$ f(G_2) & = g(G_2) && "since" h(G_2) = 0 \
+       & > g(G)   && "since" G_2 "is suboptimal" \
+       & >= f(n)  && "since" h "is admissible" $ Since $f(G_2) > f(n)$, $A^*$ will never select $G_2$ for expansion.
 #align(right)[$square.filled$]
 
 - _Does this proof work also for Graph Search?_ \ \ *NO*, because the previous proof relies on the basis that every node path is explored #underline()[independently] which is ok for tree search but for graph search is not because it introduces the *explored set* to avoid duplicate work, which creates a major problem for $A^*$:
-  
+
   - *The Reopening Problem*: _What if a suboptimal path reaches a state first and expands it pushing that state into the explored set?_ Well, if the actual optimal path to that state is discovered later it will be thrown away and the algorithm will possibly miss the true optimal solution.
 
     - *Solution*: Use *consistent* heuristics.
 
-    - *Consistent heuristics*: A heuristics function is consistent if $ h(n) <= c(n,a,n') + h(n') $ and if a heuristics is consistent then we have 
-    $
-      f(n') &= g(n') + h(n')\
-      &= g(n) + c(n,a,n') + h(n')\
-      &>= g(n) + h(n)\
-      &= f(n)
-    $ which, if we look at it geometrically, is basically saying that the heuristics function in a graph has to always be compliant to the *triangle inequality principle*.
+    - *Consistent heuristics*: A heuristics function is consistent if $ h(n) <= c(n,a,n') + h(n') $ and if a heuristics is consistent then we have
+    $ f(n') & = g(n') + h(n') \
+          & = g(n) + c(n,a,n') + h(n') \
+          & >= g(n) + h(n) \
+          & = f(n) $ which, if we look at it geometrically, is basically saying that the heuristics function in a graph has to always be compliant to the *triangle inequality principle*.
 
     #figure(
       image("asset/artificial-intelligence-20.png", width: 20%),
       caption: [
         Geometrical visualization of consistent heuristics
-      ]
+      ],
     )
 
   - *Lemma*: $A^*$ expands nodes in order of increasing $f$ value, it gradually adds "*$f$ contours*" of nodes where che contour $i$ has all nodes with *$f = f_i$* where *$f_i < f_(i+1)$*.
-  
+
 #figure(
-  image("asset/artificial-intelligence-21.png", width: 60%)
+  image("asset/artificial-intelligence-21.png", width: 60%),
 )
 
-  - *Properties*:
+- *Properties*:
 
-  #figure(
-    table(
-      columns: (1.1fr,1.1fr,1.1fr,0.7fr),
-      inset: 5pt,
-      align: horizon,
-      fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
-      table.header(
-        [*Completeness*], [*Time*], [*Space*],[*Optimality*]
-      ),
-      [YES, unless there are infinitely many nodes with $f <= f(G)$],
-      [Exponential in [relative error in $h times$ length of solution]],
-      [Keeps all nodes in memory],
-      [YES],
-    ),
-    caption: [
-      $A^*$ properties table
-    ]
-) 
+#figure(
+  table(
+    columns: (1.1fr, 1.1fr, 1.1fr, 0.7fr),
+    inset: 5pt,
+    align: horizon,
+    fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+    table.header([*Completeness*], [*Time*], [*Space*], [*Optimality*]),
+    [YES, unless there are infinitely many nodes with $f <= f(G)$],
+    [Exponential in [relative error in $h times$ length of solution]],
+    [Keeps all nodes in memory],
+    [YES],
+  ),
+  caption: [
+    $A^*$ properties table
+  ],
+)
 \
-  - #underline()[*NOTE*]: _$A^*$ is not only optimal but also no other algorithm is guaranteed to expand fewer nodes than $A^*$, in fact any algorithm that doesn't expand all nodes with $f(n)<C^*$ ($C^*$ being the total cost of the optimal solution path) runs the risk of missing the optimal solution._
+- #underline()[*NOTE*]: _$A^*$ is not only optimal but also no other algorithm is guaranteed to expand fewer nodes than $A^*$, in fact any algorithm that doesn't expand all nodes with $f(n)<C^*$ ($C^*$ being the total cost of the optimal solution path) runs the risk of missing the optimal solution._
 
 As we can understand though $A^*$ has a major memory issue being exponential in space and it could happen that the memory is filled up before finding a solution.
 
 === Iterative Deepening A\* (IDA\*)
 
 To solve the memory issue we have a twist to the classic $A^*$ algorithm. This  alternative behaves just like $A^*$ but it adds a *cutoff* value initialized at 0 and updated during the execution of the algorithm.
-  - *How it works*:
-    - _We initialize the cutoff value at 0 for $f$_.
-    - _During an iteration a node $n$ is not inserted in the queue if its $f$ value  is larger than the cutoff value._
-    - _When the queue is emptied and no goal was found we start a new iteration and we update the cutoff value._ 
+- *How it works*:
+  - _We initialize the cutoff value at 0 for $f$_.
+  - _During an iteration a node $n$ is not inserted in the queue if its $f$ value  is larger than the cutoff value._
+  - _When the queue is emptied and no goal was found we start a new iteration and we update the cutoff value._
 $ "cutoff"_(i+1) = min{f(n) | f(n) > "cutoff"_i} $
 
 === Recursive Best-first Search (RBFS)
@@ -658,50 +640,48 @@ def rbfs(problem, node, f_limit):
   image("asset/artificial-intelligence-22.png", width: 70%),
   caption: [
     RBFS example
-  ]
+  ],
 )
 
 - #underline()[*NOTE*]: RBFS is like A\*, it's optimal if the heuristic function $h(n)$ is consistent.
 
 #figure(
-    table(
-      columns: (1.1fr, 1.1fr, 1.1fr, 0.7fr),
-      inset: 5pt,
-      align: horizon,
-      fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
-      table.header(
-        [*Completeness*], [*Time*], [*Space*], [*Optimality*]
-      ),
-      [YES \ *(if step costs $> epsilon > 0$)*],
-      [Exponential \ $O(b^d)$ in worst case],
-      [Linear \ $O(b \cdot d)$],
-      [YES \ *(if heuristic is admissible)*],
-    ),
-    caption: [
-      RBFS (Recursive Best-First Search) properties table
-    ]
+  table(
+    columns: (1.1fr, 1.1fr, 1.1fr, 0.7fr),
+    inset: 5pt,
+    align: horizon,
+    fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+    table.header([*Completeness*], [*Time*], [*Space*], [*Optimality*]),
+    [YES \ *(if step costs $> epsilon > 0$)*],
+    [Exponential \ $O(b^d)$ in worst case],
+    [Linear \ $O(b \cdot d)$],
+    [YES \ *(if heuristic is admissible)*],
+  ),
+  caption: [
+    RBFS (Recursive Best-First Search) properties table
+  ],
 )
 
 === Simplified MA\*
 
 It behaves just like A\* but to proceed it needs to remove from the queue an old node to make space for the new node.
-  - It removes the node with the worst ``` f-value```.
-  - The ``` f-value``` of the removed node is backed up to its parent node.
-  - The parent node will eventually be expanded when al the other paths are worst.
+- It removes the node with the worst ``` f-value```.
+- The ``` f-value``` of the removed node is backed up to its parent node.
+- The parent node will eventually be expanded when al the other paths are worst.
 
-  #figure(
-    image("asset/artificial-intelligence-23.png", width: 60%),
-    caption: [
-      Simplified MA\* example 1
-    ]
-  )
+#figure(
+  image("asset/artificial-intelligence-23.png", width: 60%),
+  caption: [
+    Simplified MA\* example 1
+  ],
+)
 
-  #figure(
-    image("asset/artificial-intelligence-24.png", width: 60%),
-    caption: [
-      Simplified MA\* example 2
-    ]
-  )
+#figure(
+  image("asset/artificial-intelligence-24.png", width: 60%),
+  caption: [
+    Simplified MA\* example 2
+  ],
+)
 - *Special Case*: _What happens if all the nodes in the queue have the same ``` f-value```?_ Well, SMA\* should not select the same node for deletion *and* expansion.
   - *Policy*:
     - _Delete the oldest worst node and expand the newest best node and if these coincide then the current search tree must be a single path from root to the node that fills all of memory, so unless the node is a goal then we can discard it because even if it is on a optimal solution path we get that that solution isn't reachable with the avaiable information._
@@ -716,7 +696,7 @@ An admissible heuristics never overestimates the true cost of the goal. A way to
 
 - *Core Principle*:
   - *Relaxation*: Removing constraints from a problem makes it easier to solve.
-  - *Rule*: The optimal solution cost of a relaxed problem is never greater than the optimal cost of the real. 
+  - *Rule*: The optimal solution cost of a relaxed problem is never greater than the optimal cost of the real.
 
 $ "Cost"_"Relaxed" <= "Cost"_"Real" $
 
@@ -726,7 +706,7 @@ $ "Cost"_"Relaxed" <= "Cost"_"Real" $
   image("asset/artificial-intelligence-25.png", width: 60%),
   caption: [
     Traveling Salesman Problem example
-  ]
+  ],
 )
 
 We compute the *minimum spanning tree* of the graph in $O(n^2)$ to find a lower bound on the shortest tour.
@@ -753,7 +733,7 @@ The *Hill-Climbing* algorithm is a foundational local search algorithm whose ide
   - _If a neighbour improves the objective function more than the current state, move to it._
   - _If not a single neighbour improves the objective function then we stop and return the current state as the solution._
 
-```py 
+```py
 def hill_climbing(problem):
   current = make_node(problem.InitialState())
   while True:
@@ -770,7 +750,7 @@ def hill_climbing(problem):
   - *Plateau*: It's a flat area where the evaluation value is uniform so the algorithm gets stuck because there are no steps that improbe the objective function, it is basically a "flat local maxima".
 
 - *Alternatives to fix the Traps*:
-  
+
   - *Plateaux Fix*: We can fix that by allowing *side moves* which that don't improve the objective function but can lead to having neighbouring states that do, to avoid loops we can put a limit to the maximum quantity of side moves allowed but knowing that with a long enough plateaux the trap might still exist.
 
   - *Local Maxima Fixes*:
@@ -778,13 +758,16 @@ def hill_climbing(problem):
     - *Stochastic Hill-Climbing*: It chooses at random among uphill moves that improve the objective function value, we can also weigh the probability of selection depending on the steepness of the uphill move.
 
     - *Random-Restart Hill Climbing*: It conducts multiple hill-climbing searches from randomly generated states. If we call $p$ the probability to find an optimal solution for a single search then we have that the expected number of searches needed to find an optimal solution is $frac(1, p)$.
-      - *How do we know?*: Let's consider random binary variables $x_i$ such that $ x_i = cases(0 "if i-th search does not find an optimal solution", 1 "if i-th search does find an optimal solution") $ 
+      - *How do we know?*: Let's consider random binary variables $x_i$ such that $ x_i = cases(0 "if i-th search does not find an optimal solution", 1 "if i-th search does find an optimal solution") $
       We also know that $ forall i " " P(x_i = 1) = p and P(x_i = 0) = 1-p $ Moreover we know that $x_i$ are *mutually independent*.\
       Then we have the *Bernoulli Process* for which the expected number of searches before finding the optimal solution follows a *Geometric Distribution*.\
-      In fact, the probability that the k-th search is the first to find a optimal solution is: $ P((sum^infinity _(j=1) x_j = 0) and (x_k = 1)) = (1 - p)^(k-1)p $ Then we can obtain the value of the quantity we are interested in: $ sum ^infinity _(k=1) k(1-p)^(k-1)p &= p sum ^infinity _(k=1) k(1-p)^(k-1)\ &=-p sum ^infinity _(k=1) frac(d(1-p)^k, d p)\ &= -p frac(d, d p)(sum ^infinity _(k=0) (1-p)^k - 1) = -p frac(d, d p)(1/p - 1)\ &= p 1/p^2 = 1/p $
+      In fact, the probability that the k-th search is the first to find a optimal solution is: $ P((sum^infinity_(j=1) x_j = 0) and (x_k = 1)) = (1 - p)^(k-1)p $ Then we can obtain the value of the quantity we are interested in: $ sum^infinity_(k=1) k(1-p)^(k-1)p & = p sum^infinity_(k=1) k(1-p)^(k-1) \
+                                       & =-p sum^infinity_(k=1) frac(d(1-p)^k, d p) \
+                                       & = -p frac(d, d p)(sum^infinity_(k=0) (1-p)^k - 1) = -p frac(d, d p)(1/p - 1) \
+                                       & = p 1/p^2 = 1/p $
 
 - *Empirical Performance Example* (State Space $approx 17$ billion states):
-  
+
   #figure(
     table(
       columns: (1.6fr, 0.9fr, 1.1fr, 1.1fr, 1.2fr, 1.2fr),
@@ -792,16 +775,26 @@ def hill_climbing(problem):
       align: horizon,
       fill: (col, row) => if row == 0 or col == 0 { rgb("f0f0f0") } else { none },
       table.header(
-        [*Algorithm Variant*], [*Optimal Rate ($p$)*], [*Success Steps*], [*Suboptimal Steps*], [*Searches Needed*], [*Total Expected Steps*]
+        [*Algorithm Variant*],
+        [*Optimal Rate ($p$)*],
+        [*Success Steps*],
+        [*Suboptimal Steps*],
+        [*Searches Needed*],
+        [*Total Expected Steps*],
       ),
       [*Standard \ Hill-Climbing*], [14%], [4 steps], [3 steps], [--], [--],
       [*Hill-Climbing with \ Sideways Moves * \ ($approx 100$ moves)], [94%], [21 steps], [64 steps], [--], [--],
       [*Random-Restart \ Hill-Climbing*], [14%)], [4 steps], [3 steps], [$approx 7$ \ ($6.14$ failures)], [22.43],
-      [*Random-Restart \ Hill-Climbing with \ Sideways Moves*], [94%], [21 steps], [64 steps], [$approx 1.06$ \ ($0.06$ failures)], [25.08],
+      [*Random-Restart \ Hill-Climbing with \ Sideways Moves*],
+      [94%],
+      [21 steps],
+      [64 steps],
+      [$approx 1.06$ \ ($0.06$ failures)],
+      [25.08],
     ),
-    caption: [Hill-climbing and Random-Restart performance statistics]
+    caption: [Hill-climbing and Random-Restart performance statistics],
   )
-  
+
 === Simulated Annealing
 
 It's an important local search algorithm that was created to avoid the traps of hill-climbing, the core difference is that Hill-Climbing accepts only moves that improve the objective function while Simulated Annealing introduces some randomness through the concept of *temperature*.
@@ -810,7 +803,7 @@ It's an important local search algorithm that was created to avoid the traps of 
   - _Start from a random state and high temperature._
   - _Chooses a random neighbour._
   - _We evaluate the improvement $Delta E$ with the random neighbour, if it's better the action is accepted always, if it's worse then it *could* still be accepted with a certain probability._
-    - *Probability*: $ P = e ^ (frac(Delta E, T)) $
+    - *Probability*: $ P = e^(frac(Delta E, T)) $
 
 ```py
 def simulated_annealing(problem, schedule):
@@ -828,9 +821,9 @@ def simulated_annealing(problem, schedule):
       current.probability = e ^ (diff_E / T)
 ```
 
-- *Properties*: 
-  - At fixed temperature $T$, state occupation probability reaches the Boltzmann distribution $ p(x) = alpha e ^(-E(x) / (k T)) $
-  - $T$ decreased slowly enough means that we will always reach best state $x^*$ because $ frac(e ^ (frac(-E(x^*), k T)), e^(frac(-E(x), k T))) = e ^ (frac(E(x) - E(x^*), k T)) >> 1 "for small T." $
+- *Properties*:
+  - At fixed temperature $T$, state occupation probability reaches the Boltzmann distribution $ p(x) = alpha e^(-E(x) / (k T)) $
+  - $T$ decreased slowly enough means that we will always reach best state $x^*$ because $ frac(e^(frac(-E(x^*), k T)), e^(frac(-E(x), k T))) = e^(frac(E(x) - E(x^*), k T)) >> 1 "for small T." $
 
 === Local Beam Search
 
@@ -865,7 +858,7 @@ It's a category of algorithms inspired by natural selection and evolutionary bio
 def genetic_algorithm(population, fitness_fn, mutation_rate=0.05, max_iterations=1000):
     for _ in range(max_iterations):
         best_individual = max(population, key=fitness_fn)
-        if fitness_fn(best_individual) >= 100: 
+        if fitness_fn(best_individual) >= 100:
             return best_individual
         fitness_values = [fitness_fn(ind) for ind in population]
         total_fitness = sum(fitness_values)
@@ -892,7 +885,7 @@ def reproduce(parent1, parent2):
   image("asset/artificial-intelligence-26.png", width: 75%),
   caption: [
     Genetic Algorithm example
-  ]
+  ],
 )
 
 === Gradient Descent
@@ -900,7 +893,7 @@ def reproduce(parent1, parent2):
 It's the continuous domain counterpart to hill-climbing, meaning that while hill-climbing evaluates a set of neighbouring states, gradient descent uses gradients to navigate continuous state spaces.
 
 - *Calcus Reminder*:
-  - *Gradient*: A gradient $nabla f$ is a vector of the first-order partial derivatives of a multivariable function $f(x_1,...,x_n)$. $ nabla f = (frac(partial f, partial x_1), frac(partial f, partial x_2), ..., frac(partial f, partial x_n)) $ This vector is useful in this context because it points to the direction of the *steepest ascent*. 
+  - *Gradient*: A gradient $nabla f$ is a vector of the first-order partial derivatives of a multivariable function $f(x_1,...,x_n)$. $ nabla f = (frac(partial f, partial x_1), frac(partial f, partial x_2), ..., frac(partial f, partial x_n)) $ This vector is useful in this context because it points to the direction of the *steepest ascent*.
 
 - *How it works*:
   - _List all the independent variables upon which $f$ depends._
@@ -938,7 +931,7 @@ def gradient_descent(initial_state, learning_rate=0.05, max_iterations=100, tole
   image("asset/artificial-intelligence-27.png", width: 60%),
   caption: [
     Gradient descent example graph
-  ]
+  ],
 )
 
 == Online Search
@@ -952,30 +945,235 @@ In fact, online search is particularly good for #underline()[exploration problem
 
 - #underline()[*Theoretical Example*]:
 
-  As we can see in @online-search-ex we need to go from position $S = (1,1)$ to $G = (3,3)$. But how? 
+  As we can see in @online-search-ex we need to go from position $S = (1,1)$ to $G = (3,3)$. But how?
 
   #figure(
     image("asset/artificial-intelligence-28.png", width: 35%),
     caption: [
       Online Search theoratical example
-    ]
+    ],
   ) <online-search-ex>
 
   Well, we assume that we have a deterministic and fully observable environment but the agent knows only:
 
-    - $"Actions"(s)$: Returns a list of allowed actions in the state $s$.
-    - $c(s, a, s')$: Which is the step function.
-    - $"GoalTest"(s)$: Which verifies wether the state $s$ is goal.
+  - $"Actions"(s)$: Returns a list of allowed actions in the state $s$.
+  - $c(s, a, s')$: Which is the step function.
+  - $"GoalTest"(s)$: Which verifies wether the state $s$ is goal.
+
 - #underline()[*NOTE*]: If some actions are irreversible then online search might reach a dead-end stat, this is unavoidable even for safely explorable state spaces.
 
 The performance of Online Search algorithms is measured through *Competitive Ratio*:$ "Competitive Ratio" = frac("total path cost with online search", "total path cost knowing the state space in advance") $
 
 === Depth-first Online Search
 
-Considering that Depth-first search is local then it applies natually to online search.
+Considering that Depth-first search is local then it applies naturally to online search.
+
+- *How it works*:
+
+  - _Check for the goal._
+  - _If not, discover new states and for each of them if it's a state never seen before we look up all possible actions and add them to the untried list._
+  - _If we are in a state because we moved from another we save that connection to the result map and add the previous state to the unbacktracked list._
+  - _If we still have untried actions we pick one and go for it otherwise we backtrack choosing a unbacktracked state._
+  - _Repeat._
 
 ```py
-def online_dfs_agent()
+class OnlineDFSAgent:
+    def __init__(self):
+        self.s = None                  # Previous state
+        self.a = None                  # Previous action
+        self.result = {}               # Maps (s, a) -> s'
+        self.untried = {}              # Maps s -> list of untried actions
+        self.unbacktracked = {}        # Maps s -> stack of states never backtracked to
+
+    def __call__(self, problem, s_):
+        if problem.isGoal(s_):
+            return "Stop"
+        if s_ not in self.untried:
+            self.untried[s_] = list(problem.actions(s_))
+            self.unbacktracked[s_] = []
+        if self.s is not None:
+            self.result[(self.s, self.a)] = s_
+            self.unbacktracked[s_].insert(0, self.s)
+        if not self.untried[s_]:
+            if not self.unbacktracked[s_]:
+                return "Stop"
+            else:
+                target_state = self.unbacktracked[s_].pop(0)
+                b = None
+                for action in problem.actions(s_):
+                    if self.result.get((s_, action)) == target_state:
+                        b = action
+                        break
+                self.a = b
+        else:
+            self.a = self.untried[s_].pop()
+        self.s = s_
+        return self.a
 ```
+
+=== Random Walk
+
+It is used when standard hill-climbing is trapped locally and random restarts cannot be used.
+
+- *How it works*
+  - _Check for the goal._
+  - _If not a goal, select a neighbouring state with preference towards those never tried before._
+  - _Repeat._
+
+- *Properties*:
+  - Preference can be given to actions that have not yet been tried.
+  - Guarantees eventual goal discovery in finite state spaces.
+  - Can be extremely slow due to unfavorable backward/forward transition probabilities.
+    - The probability to go towards the goal is half than the probability to go back.
+
+#figure(
+  image("asset/artificial-intelligence-29.png", width: 60%),
+  caption: [
+    Random Walk schema
+  ],
+)
+
+=== LRTA\* Search
+
+It's an online heuristic search algorithm that enables agents to navigate unknown environments and escape local maxima by updating heuristic estimates using local experience.
+
+- *How it works*:
+  - _Start at current state $s$ with initial heuristic estimates $h(s)$_
+  - _Select action $a$ minimizing the immediate cost plus the heuristic of the successor: $ c(s, a, s') + h(s') $_
+  - _Update the heuristic of the current state before moving: $ h(s) = min_a (c(s, a, s') + h(s')) $_
+  - _Execute the action, transition to $s'$, and repeat until the goal is reached._
+
+- *Properties*:
+  - Complete in finite state spaces that contain a path to the goal, and updates heuristic values to be more accurate with each trial.
+
+```py
+class LRTASearchAgent:
+
+    def __init__(self, heuristic_func):
+        self.s = None             # Stato precedente (inizialmente null)
+        self.a = None             # Azione precedente (inizialmente null)
+        self.result = {}          # Tabella che mappa (s, a) -> s'
+        self.H = {}               # Tabella dei costi stimati H[s]
+        self.h = heuristic_func   # Euristica di riferimento
+
+    def lrta_cost(self, problem, s, b, s_prime):
+        if s_prime is None:
+            return self.h(s)
+        return problem.action_cost(s, b, s_prime) + self.H.get(
+            s_prime, self.h(s_prime)
+        )
+
+    def __call__(self, problem, s_prime):
+        if problem.is_goal(s_prime):
+            return "Stop"
+
+        if s_prime not in self.H:
+            self.H[s_prime] = self.h(s_prime)
+
+        if self.s is not None:
+            self.result[(self.s, self.a)] = s_prime
+
+            min_cost = float("inf")
+            for b in problem.actions(self.s):
+                next_state = self.result.get((self.s, b))
+                cost = self._lrta_cost(problem, self.s, b, next_state)
+                if cost < min_cost:
+                    min_cost = cost
+            self.H[self.s] = min_cost
+
+        best_action = None
+        min_cost = float("inf")
+        for b in problem.actions(s_prime):
+            next_state = self.result.get((s_prime, b))
+            cost = self._lrta_cost(problem, s_prime, b, next_state)
+            if cost < min_cost:
+                min_cost = cost
+                best_action = b
+
+        self.s = s_prime
+        self.a = best_action
+        return self.a
+```
+#pagebreak()
+
+== Adversarial Search
+
+This type of search algorithms that involves competitive scenarios like, notably zero sum games like chess, checkers and more, the agent will always assume that its opponent will play optimally to maximize its advantage
+
+#figure(
+  image("asset/artificial-intelligence-30.png", width: 65%),
+  caption: [
+    Game Tree example
+  ]
+)
+
+== Minimax
+
+It's the first of this kind we see and it works on the idea of a game tree where:
+- *MAX Player*: A player that chooses moves that lead to the highest utility score.
+- *MIN Player*: A player that chooses moves that lead to the lowest possibile score for the MAX Player.
+- *How it works*:
+
+  - _The algorithm explores the game tree from the current state down to the  terminal states or to a fixed depth limit._
+  - _A function then evaluates the board state from the perspective of a MAX Player._
+    - _${+1, -1, 0}$ for respectively WIN, LOSS, DRAW._
+  - _The algorithm evaluate then from the bottom up:_
+    - _At MIN levels the node takes the minimum value of its children._
+    - _At MAX levels the node takes the maximum value of its children._
+  - _The it makes an optimal decision selecting the action that leads to the child node with the highest propagated value._
+
+
+```py
+def minimax_decision(game, state):
+    best_action = None
+    best_value = float("-inf")
+    for action in game.actions(state):
+        value = min_value(game, game.result(state, action))
+        if value > best_value:
+            best_value = value
+            best_action = action
+    return best_action
+
+def max_value(game, state):
+    if game.is_terminal(state):
+        return game.utility(state)
+    v = float("-inf")
+    for action in game.actions(state):
+        v = max(v, min_value(game, game.result(state, action)))
+    return v
+
+def min_value(game, state):
+    if game.is_terminal(state):
+        return game.utility(state)
+    v = float("inf")
+    for action in game.actions(state):
+        v = min(v, max_value(game, game.result(state, action)))
+    return v
+```
+
+#figure(
+  image("asset/artificial-intelligence-31.png", width: 90%),
+  caption: [
+    Minimax game tree example with three players
+  ]
+)
+- *Properties*:
+
+#figure(
+  table(
+    columns: (1fr, 1.2fr, 1fr, 1fr),
+    inset: 5pt,
+    align: horizon,
+    fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+    table.header([*Completeness*], [*Optimality*], [*Time*], [*Space*]),
+    [YES \ (if tree is finite)],
+    [YES \ (against an optimal opponent)],
+    [$ O(b^m) $],
+    [$ O(b m) $],
+  ),
+  caption: [
+    Minimax properties table
+  ],
+)
 
 #pagebreak()
