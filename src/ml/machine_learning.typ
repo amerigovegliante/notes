@@ -1,6 +1,6 @@
-#import "../templates/frontpage.typ": frontpage
-#import "../templates/style.typ": style
-#import "../templates/index.typ": index
+#import "/templates/frontpage.typ": frontpage
+#import "/templates/style.typ": style
+#import "/templates/index.typ": index
 
 #set text(font: "Google Sans", size: 12pt)
 
@@ -88,9 +88,56 @@ do not know its exact specification, but we assume it is structured and predicta
 
   - *Probabilistic Guarantee*: #text(fill: green)[*YES*], if we assume that instances are drawn i.i.d. from a fixed distrubution $D$ then we have that the empirical error $E_"in" (h)$ concentrates strongly around the true out of sample risk $E_"out" (h)$ as $N --> infinity$. 
 
-Let's say we have a bin full of green and red marbles, like represented in
+Let's say we have a bin full of green and red marbles
 
+#figure(
+  image("asset/machine-learning-1.svg", width: 20%),
+  caption: [
+    Bin full of green and red marbles schema
+  ]
+)
 
+And we call:
+
+- *Population Parameter $pi$*: The true fraction of red marbles in the bin (unknown).
+
+- *Sample Draw $N$*: We draw $N$ marbles independently at random with replacement.
+
+- *Sample Statistic $sigma$*: The observed fraction of red marbles in the sample.
+
+Does $sigma$ say something about $pi$? No, unless we talk probabilistically in which case we can say that: $ N --> infinity ==> sigma approx pi $
+
+- *Hoeffding's Inequality*: The concentration of $sigma$ around $pi$ is bounded by this inequality. In the case of single variable we can say that if we have $Z_1,...,Z_N in [0,1], E[Z_i] = pi, forall i in {1,...,N}$, also let $sigma = frac(1, N)sum^N_(i=1) Z_i$ be their sample mean, then we have: $ P(|sigma - pi| > epsilon) <= 2 e^(-2epsilon^2N) $
+
+  - *Properties*:
+
+    - *Exponential Decay in $N$*: The probability of an atypical sample (where $|sigma - pi| > epsilon$) vanishes exponentially fast as $N --> infinity$.
+  
+    - *Uniformity*: The bound holds for any underlying distribution $D$ and for any true value of $pi$.
+  
+    - *Tradeoff Curve*: Tightening the error tolerance $epsilon$ requires $N prop frac(1, epsilon^2)$.
+
+- *The PAC Framework*: PAC Learning formalizes statistical learning guarantees, in fact, an hypothesis $h$ is *approximately correct* if its error is withing a small tolerance $epsilon > 0$ of the truth: $ |E_"in" (h) - E_"out" (h)| <= epsilon $ This condition holds with a confidence level of $1 - delta$ where $delta = 2e^(-2epsilon^2N)$ is the "probability of failure" which means drawing a bad sample.
+
+This is cool, but _how do we get this to Machine Learning?_
+
+  #figure(
+    table(
+    columns: (1fr, 1fr),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [*Bin Experiment Parameter*], [*Machine Learning Framework $h$*],
+    ),
+    [Bin Population], [Instance Space $X$],
+    [Single Marble],[Data Point $x in X$],
+    [],[],
+    [],[],
+    [],[],
+    [],[],
+  )
+
+  )
 
 #pagebreak()
 
@@ -98,34 +145,4 @@ Let's say we have a bin full of green and red marbles, like represented in
 #pagebreak()
 
 == Neural Networks
-#pagebreak()
-
-= Gradient Descent Algorithm
-#pagebreak()
-
-= Generalized Linear Models and SVM
-#pagebreak()
-
-= Preprocessing
-#pagebreak()
-
-= Practical Issues
-#pagebreak()
-
-= Representation Learning
-#pagebreak()
-
-= Bayesian Learning
-#pagebreak()
-
-= Ensemble Learning
-#pagebreak()
-
-= Clustering
-#pagebreak()
-
-= Recommender Systems
-#pagebreak()
-
-= Laboratories
 #pagebreak()
