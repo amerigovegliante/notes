@@ -82,7 +82,7 @@ do not know its exact specification, but we assume it is structured and predicta
 
 == PAC Learning, Generalization and SRM
 \
-- _Can a learning algorithm infer an unknown target function $f$ using only a finite sample $S$.?_
+- _Can a learning algorithm infer an unknown target function $f$ using only a finite sample $S$?_
 
   - *Deterministic Guarantee*: #text(fill: red)[*NO*], an "adversarial nature" can always assign arbitrary labels to unobserved instances $x in.not S$, therefore we need statistical assumptions.
 
@@ -131,14 +131,25 @@ This is cool, but _how do we get this to Machine Learning?_
     ),
     [Bin Population], [Instance Space $X$],
     [Single Marble],[Data Point $x in X$],
-    [],[],
-    [],[],
-    [],[],
-    [],[],
+    [#text(fill: green)[*Green Marble*]],[Correct, $h(x) = f(x)$],
+    [#text(fill: red)[*Red Marble*]],[Wrong, $h(x) != f(x)$],
+    [$pi$],[$E_"out" (h) = P(h(x) != f(x))$],
+    [$sigma$],[$E_"in" (h) = frac(1, N) sum^N_(i=1)I[h(x_i) != y_i]$],
+    )
   )
 
-  )
+- *Verification and Learning*: It's when a single hypothesis $h$ is evaluated "a priori" (before observing $S$ the sample set) $ P(|E_"in" (h) - E_"out" (h)| > epsilon) <= 2e^(-2epsilon^2N) $ But in machine learning we don't do that, we use an algorithm ot explore a space $H = {h_1, ..., h_M}$ and then select $g in H$ after inspecting $S$. $ g =arg min_(h in H)E_"in" (h) $
 
+- *Selection Bias*: It's a bias that occurs when the data used to train a model is not truly representative of the real world population, meaning that our training data is skewed in a way that doesn't reflect reality and this way our model will learn flawed patterns leading to poor performance.
+
+  - #underline()[*Note*]: It's not about train vs test data samples but rather a difference in context of "placement" of the model.
+
+- *The Union Bound for Finite Hypothesis Spaces*: In order to guarantee $E_"in" (g) approx E_"out" (g)$ we need to enforce a uniform bound such that $ P(|E_"in" (g) - E_"out" (g)| > epsilon) <= P(exists h in H : |E_"in" (h) - E_"out" (h)| > epsilon) $ Applying Boole's Inequality over $M = |H|$ bad events have $ P(union.big^M_(m=1){|E_"in"(h_m) - E_"out" (h_m)| > epsilon}) <= sum^M_(m=1) P(|E_"in" (h_m) - E_"out" (h_m)| > epsilon) <= 2M e^(-2epsilon^2N) $
+
+  - #underline()[*Note*]: When $M = |H| = infinity$ then we have $ 2M e^(-2epsilon^2 N) --> infinity $ Which means that the bound is completely uninformative and failing to explain why continuous models generalize, this is called *Bottleneck of Continuous Spaces*.
+
+
+Good thing that $M = infinity$ doesn't mean that we can't learn since that infinte candidate functions do not imply infinite independent classification behaviours on a finite sample.
 #pagebreak()
 
 == Decision Trees
