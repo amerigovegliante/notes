@@ -16,7 +16,6 @@
 
 #show: style
 
-
 #pagebreak()
 
 #index()
@@ -150,9 +149,81 @@ This is cool, but _how do we get this to Machine Learning?_
 
 
 Good thing that $M = infinity$ doesn't mean that we can't learn since that infinte candidate functions do not imply infinite independent classification behaviours on a finite sample.
+
+- *Dichotomy*: Given $N$ instances $x_1, ..., x_N in X$, a dichotomy induced by $h in H$ is a binary vector of labels $ (h(x_1),...,h(x_N)) in {-1,+1}^N $
+  - #underline()[*Note*]: The set of all dichotomies induced by $H$ on $N$ points is denoted $H(x_1, ...,x_N)$.
+
+- *Growth Function*: It's the maximum number of distinct dichotomies that $H$ can induce on any set of $N$ points: $ m_H (N) = max_(x_1,...,x_N in X) |H(x_1,...,x_N)| <= 2^N $
+
+  - *High Overlap of Bad Events*: Redundant hypotheses classify sample data identically $ ==> m_H (N) << 2^N $
+
+- *Shattering*: A set of $N$ points $S subset X$ is shattered by $H$ if $H$ can realize  all $2^N$ dichotomies on $S$ $ |H(x_1,...,x_N)| = 2^N $
+
+- *Vapnik-Chevronenkis Dimension (VC Dimension)*: The VC Dimension, $d_"VC" (H)$, is the maximum number of points $N$ tht can be shattered by $H$. $ d_"VC" (H) = max{N in NN | m_H (N) = 2^N} $ Also, if arbitrarly large points sets can be shattered then $d_"VC" (H) = infinity$.
+
+  - *Quantifier Golden Rule for VC Proofs*: When we need to prove $d_"VC" (N) = d$:
+
+    + *Lower Bound* ($d_"VC" >= d - exists$): You have to prove that #underline()[there exists at least one] set of $d$ points that can be shattered.
+  
+      - #underline()[*Note*]: Degenerate or collinear points do not invalidate this.
+
+    + *Upper Bound* ($d_"VC" < d + 1 - forall$)): Prove that #underline()[no set] of $d+1$ points can be shattered.
+
+    - #underline()[*Note*]: It's common mistake to equate VC Dimension and Parameter Count, we can disprove it by $ "Consider" H_"sine" = {h_omega (x) = "sign"(sin(omega x)) | omega in RR} $ Despite having only one parameter, if we set an aribitrarly large $omega$ $H_"sine"$ can still shatter ${x_1,...,x_N}$, so $ d_"VC" (H_"sine") = infinity $
+
+- *Sauer-Shelah's Lemma*: If $d_"VC" (H) = d < infinity$, the growth function transitions from $2^N$ growth to polynomial growth for $N > d$. $ m_H (N) <= sum ^d _(i=0) binom(N, i) <= (frac(e N, d))^d = O(N^d) $
+
+The replacement of $N$ with $4m_H (2N)$ via the symmetrization lemma "hides" the following fundamental theorem:
+
+- *Vapnik-Chevronenkis Inequality*: For any hypothesis space $H$ with $d_"VC" = d < infinity$ and sample size $N$: $ P(sup_(h in H) |E_"in" (h) - E_"out" (h)| > epsilon) <= 4m_H (2N) e^(-1/8 epsilon^2 N) $
+
+- *The VC Generalization Bound*: If we set the failure probability bound to $delta$ we obtain that with probability of at least $1 - delta$ the true out-of-sample risk $E_"out" (g)$ of the learned hypothesis $g$ is bounded by: $ E_"out" (g) <= E_"in" (g) + Omega(N, d_"VC", delta) $ where: $ Omega(N, d_"VC", delta) = O(sqrt(frac(d_"VC" ln(frac(N, d_"VC")) + ln(1/delta), N)) $ We can call them:
+  
+  - $Omega(N, d_"VC", delta)$ is the *Training Fit*.
+
+  - $E_"in" (g)$ is the *VC Confidence Penalty*.
+
+- *Structural Risk Minimization (SRM)*: To optimize the fundamental trade-off between training fit ($E_"in"$) and model capacity $Omega$ we have SRM, where we define a nested structure of hypothesis spaces with increasing VC dimensions: $ H_1 subset H_2 subset ... subset H_k "with" d_"VC" (H_1) <= d_"VC" (H_2) <= ... <= d_"VC" (H_k) $
+
+  #figure(
+  image("asset/machine-learning-2.png", width: 50%),
+  caption: [
+    Trade-off graph between approximation and generalization
+  ]
+)
+  SRM selects $g^*$ being the model from the structure level $k^*$ that minimizes the total bound: $ g^* = arg min_k {E_"in" (g_k) + Omega_k} $
+
+By reverting the VC generalization bound we can compute the required sample size $N$: $ N = O(frac(d_"VC" ln(1/epsilon) + ln(1/delta), epsilon^2)) $
 #pagebreak()
 
 == Decision Trees
+
+A *decision tree* represent discrete decision rules in a hierarchical tree structure which is directly reducible to if-then rules, meaning that a decision tree based model is easily interpretable which can be useful in domains where auditability is critical.
+
+- _Why should i use them?_
+  + Comprehensible.
+  + Efficient.
+  + Versatile.
+
+- _When should i use them?_
+  - Attribute-Value representation of data.
+  - Discrete target label.
+  - Target concepts can be approximated to DNF expressions.
+  - Noist and incomplete data.
+
+- *DT Structure*:
+  - *Inner Nodes*: Test a specific attribute $A_i$ of an instance.
+  - *Branches*: Represent specific discrete values $v_j in "Values"(A_i)$.
+  - *Leaf Nodes*: Assign a final class decision or probability distribution.
+
+#figure(
+  image("asset/machine-learning-3.png", width: 70%),
+  caption: [
+    Decision Tree example
+  ]
+)
+
+Sono arrivato a P7 Lez 5
 #pagebreak()
 
 == Neural Networks
