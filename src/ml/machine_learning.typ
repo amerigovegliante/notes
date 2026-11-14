@@ -177,7 +177,7 @@ The replacement of $N$ with $4m_H (2N)$ via the symmetrization lemma "hides" the
 
 - *Vapnik-Chevronenkis Inequality*: For any hypothesis space $H$ with $d_"VC" = d < infinity$ and sample size $N$: $ P(sup_(h in H) |E_"in" (h) - E_"out" (h)| > epsilon) <= 4m_H (2N) e^(-1/8 epsilon^2 N) $
 
-- *The VC Generalization Bound*: If we set the failure probability bound to $delta$ we obtain that with probability of at least $1 - delta$ the true out-of-sample risk $E_"out" (g)$ of the learned hypothesis $g$ is bounded by: $ E_"out" (g) <= E_"in" (g) + Omega(N, d_"VC", delta) $ where: $ Omega(N, d_"VC", delta) = O(sqrt(frac(d_"VC" ln(frac(N, d_"VC")) + ln(1/delta), N)) $ We can call them:
+- *The VC Generalization Bound*: If we set the failure probability bound to $delta$ we obtain that with probability of at least $1 - delta$ the true out-of-sample risk $E_"out" (g)$ of the learned hypothesis $g$ is bounded by: $ E_"out" (g) <= E_"in" (g) + Omega(N, d_"VC", delta) $ where: $ Omega(N, d_"VC", delta) = O(sqrt(frac(d_"VC" ln(frac(N, d_"VC")) + ln(1/delta), N))) $ We can call them:
   
   - $Omega(N, d_"VC", delta)$ is the *Training Fit*.
 
@@ -200,12 +200,12 @@ By reverting the VC generalization bound we can compute the required sample size
 
 A *decision tree* represent discrete decision rules in a hierarchical tree structure which is directly reducible to if-then rules, meaning that a decision tree based model is easily interpretable which can be useful in domains where auditability is critical.
 
-- _Why should i use them?_
+- #underline()[_Why should i use them?_]
   + Comprehensible.
   + Efficient.
   + Versatile.
 
-- _When should i use them?_
+- #underline()[_When should i use them?_]
   - Attribute-Value representation of data.
   - Discrete target label.
   - Target concepts can be approximated to DNF expressions.
@@ -217,14 +217,91 @@ A *decision tree* represent discrete decision rules in a hierarchical tree struc
   - *Leaf Nodes*: Assign a final class decision or probability distribution.
 
 #figure(
-  image("asset/machine-learning-3.png", width: 70%),
+  image("asset/machine-learning-3.png", width: 80%),
   caption: [
     Decision Tree example
   ]
 )
 
-Sono arrivato a P7 Lez 5
-#pagebreak()
+Every path from the root to a leaf node represents a conjuction (logical AND) of attribute tests, in fact, a complete tree can be directly translated to a *Disjunctive Normal Form (DNF)* $ "Target Class" <==> or.big _"Paths leading to Class" (and.big _"nodes in path" ("Attribute" = "Value")) $
 
+- *ID3 Algorithm*: It's an algorithm that builds decision trees top-down using a greedy, recursive search algorithm. Given the sample $S$ and attributes $A$:
+  
+  + Create root node $T$ for the tree
+  
+  + If all examples in $S$ belong to a class $c$, return leaf node $T$ labeled $c$.
+  
+  + If A is empty, return leaf node $T$ labeled with the majority class in $S$.
+  
+  + Recursion:
+  
+    - Select $a in A$ that maximizes *Information Gain* on S.
+
+    - Set node test to $a$.
+
+    - For each value $v_i in "Values"(a)$ create a branch and recursively call $ "ID3"(S_(a=v_i),A \\ {a}) $
+
+  - _But how do we pick the best attribute at each node?_ ID3 uses *Entropy* with the following formula $ E(S) = - sum ^m _(c=1) p_c log_2(p_c) $ where $p_c$ is the proportion of instances in $S$ belonging to the class $c$.
+
+    - *Properties (binary case)*:
+      - $E(S) = 0$ if sample is completely pure ($p_+ = 1 or p_- = 1$).
+
+      - $E(S) = 1$ when impurity is maximum ($p_+ = p_- = 0.5$)
+
+      #figure(
+        image("asset/machine-learning-4.png", width: 40%),
+        caption: [
+          Binary entropy graph
+        ]
+      )
+
+- *Information Gain*: it measures entropy reduction from partitioning $S$ along attribute $a$ $ G(S,a) = E(S) - sum _(v in "Values"(a)) frac(|S_(a=v)|,|S|)E(S_(a=v)) $ We can also generalize Information Gain using different impurity functions $I(S)$:
+
+  #figure(
+    table(
+    columns: (0.5fr, 1fr, 0.5fr),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [*Impurity Measure*], [*Formula*], [*Binary Range*],
+    ),
+    [*Cross-Entropy*], [$ I_H (S) = - sum ^m _(c=1) p_c log_2 (p_c) $], [ $ [0.0, 1.0] $ ],
+    [*Gini Index*],[ $ I_G (S) = 1 - sum ^m _(c=1) p_c^2 $ ], [ $ [0.0, 0.5] $ ],
+    [*Missclassification Error*],[$ I_E (S) = 1 - max_c (p_c) $],[ $ [0.0, 0.5] $ ]
+    )
+)
+
+  - #underline()[*Note*]: The Gini Index avoids logarithmic calculations, making it faster, while yelding virtually identical tree structures. 
+
+  - *Comparisons*:
+
+    - *Symmetry*: All measures peak at $p_+ = 0.5$ and drop to 0 at pure nodes ($p_+ in {0,1}$).
+
+    - *Smoothness*: Entropy and Gini are strictly concave curves, Missclassification Error is piecewise linear.
+    
+    - *Sensitivity*: Entropy and Gini are strictly penalizing near 0.5, driving splits toward pure nodes more effectively than Classification Error.
+
+    #figure(
+      image("asset/machine-learning-5.png", width: 40%),
+      caption: [
+        Impurity comparison graph
+      ]
+    )
+
+- *The High Cardinality Bias*: Information Gain exhibits an inherent bias toward attributes with many distinct values, that is why we use the *Gain Ratio* which normalizes information gain by the *Split Information* $"SI"(S,a)$ $ "SI"(S,a) = - sum _(v in "Values"(a)) frac(|S_(a=v)|, |S|) log_2 (frac(|S_(a=v)|, |S|)) $ $ "GainRatio"(S,a) = frac(G(S,a),"SI"(S,a)) $
+
+- *Overfitting*: A hypothesis $h in H$ _overfits_ training data if there exists an alternative hypothesis $h' in H$ such that: $ "Error"_"train" (h) < "Error"_"train" (h') \ "Error"_"test" (h) > "Error"_"test" (h') $ 
+
+  - _What about overfitting in DTs?_ Since ID3 recursively partitions nodes until leaves are 100% pure, it risks modeling noise and coincidental outliers in the training set.
+
+#figure(
+  image("asset/machine-learning-6.png", width: 65%),
+  caption: [
+    Overfitting Graph in DTs
+  ]
+)
+
+- *Inductive Bias in DTs*: Lez6 p4
+#pagebreak()
 == Neural Networks
 #pagebreak()
