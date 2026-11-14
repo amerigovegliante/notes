@@ -1,6 +1,6 @@
-#import "../templates/frontpage.typ": frontpage
-#import "../templates/style.typ": style
-#import "../templates/index.typ": index
+#import "/templates/frontpage.typ" : frontpage
+#import "/templates/style.typ": style
+#import "/templates/index.typ": index
 
 #set text(font: "Google Sans", size: 12pt)
 
@@ -208,7 +208,7 @@ We can represent the environment in many ways:
 
 #pagebreak()
 
-= Problem Solving
+= Problem Solving with Agents
 \
 _How do we solve problems by #underline[searching]?_
 
@@ -1113,7 +1113,7 @@ This type of search algorithms that involves competitive scenarios like, notably
   ]
 )
 
-== Minimax
+=== Minimax
 
 It's the first of this kind we see and it works on the idea of a game tree where:
 - *MAX Player*: A player that chooses moves that lead to the highest utility score.
@@ -1172,7 +1172,7 @@ def min_value(game, state):
     align: horizon,
     fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
     table.header([*Completeness*], [*Optimality*], [*Time*], [*Space*]),
-    [YES \ (if tree is finite)],
+    [YES \ (if the game tree is finite)],
     [YES \ (against an optimal opponent)],
     [$ O(b^m) $],
     [$ O(b m) $],
@@ -1182,4 +1182,234 @@ def min_value(game, state):
   ],
 )
 
+- *$alpha$ - $beta$ Pruning*: It's an optimization we can apply to Minimax so that we don't have to search through every single branch of the game tree because it discards branches that can't possibly influence the final decision.\ It does it by tracking two thresholds ($alpha$ and $beta$) while traversing the game tree recursively:
+
+  - *$alpha$*: It's the minimum score that the maximizing player is currently assured of, starting from $- infinity$ and can only increase. 
+
+  - *$beta$*: It's the maximum score that the minimizing player is currently assured of, starting from $infinity$ and can only decrease.
+
+    - *Pruning Condition*: If $alpha >= beta$ then the algorithm stops evaluating the remaining children of that node, meaning that the opponent already found a move that will force into an outcome worse or equal to an alternative we already control which means it will never allow us to reach this subtree anyway.
+  - *How it works*:
+
+    + _Depth-first Search._
+
+    + _Update $alpha$ and $beta$._
+
+    + _Pruning Check._
+
+    + _Minimax._
+
+  - *Best Case Scenario*: We assume "perfect order"
+
+  #figure(
+    image("asset/artificial-intelligence-32.png", width: 70%),
+    caption: [
+      Game tree with perfect order example
+    ]
+  ) 
+  - We call:
+
+    - $E(k)$ the minimum number of states to be considered $k"-ply"$ (single turns made by a player) from a given state to know the exact value of the state. $ E(k) = E(k-1)+(b-1)B(k-1) $
+
+    - $B(k)$ the minimum number of states to be considered $k"-ply"$ from a given state to know a bound on the state's value. $ B(k)=E(k-1) $
+
+      - *Base Case*: $E(0) = B(0) = 1$.\
+      If we expand the recursive equations and we bound it we get: $ E(k) <= (sqrt(2b))^k $ So we have, with $k = m$, a time complexity of $O(b^(frac(m, 2)))$.
+
+  - *Problem*: In real applications we don't have enough time or memory capacity to get to the bottom of the search tree.
+
+      - _Use a cutoff test instead of terminal test._
+
+      - _Use evaluation function that estimates the desirability of position._
+        
+        - _For chess, is typical:_ $ "Eval"(s) = w_1f_1(s) + w_2f_2(s) + ... + w_n f_n(s) $
+          
+          - _Where $w_k$ is the weight of the $k"-th"$ piece and $f_k(s) = ("# white pieces" - "# black pieces")$._
+        
+        - *Quiescence Search*: We use evaluation functions when we are on *Quiescent States*, it's unlikely to get huge swings in value, and we can expand *Nonquiescent States* until we reach quiescent states.
+
+  - *Horizon Effect*: It's a common problem in ai agents where an agent makes a fundamentally bad decision because an inevitable and catastrophic event is hidden just beyond its fixed search depth limit. The way we can fix this is with *singular extension* which means that for some branches we explore past the depth limit.
+
+_What happens in non-deterministic games?_ The algorithm structure stays the same but we introduce a chance layer in the game tree.
+
+#figure(
+  image("asset/artificial-intelligence-33.png", width: 65%),
+  caption: [
+    Backgammon game tree example
+  ]
+)
+
+=== Expectiminimax
+
+It's the same as minimax but it also handles the chance nodes like such:
+
+$
+"Expectiminimax"(s) = cases(
+  "Utility"(s) & "if TerminalTest"(s),
+  max_(a) "Expectiminimax"("Result"(s, a)) & "if Player"(s) = "max",
+  min_(a) "Expectiminimax"("Result"(s, a)) & "if Player"(s) = "min",
+  sum_(r) P(r) "Expectiminimax"("Result"(s, r)) & "if Player"(s) = "chance"
+)
+$
+
+#underline()[_What do we do with partially observable games?_] 
+
+They are games with hidden information (like card games), typically we would calculate $P(s)$ being the probability for each possible deal, kinda like having a huge dice. Otherwise we can compute the minimax value of each action in each deal and then choose the one with the highest expected value out of all the other deals.
+
+$ arg(max_a sum_s P(s) "Minimax"("Result"(s,a))) $
+
+- *Notes*: 
+
+  - If an action is optimal for all deals then it's optimal overall.
+
+  - When we have partial observability the value of an action depends on the *belief state* the agent is in, this leads to "rational behaviours" like:
+
+    - Acting to obtain information.
+
+    - Signalling to one's partner.
+
+    - Acting randomly to minimize information disclosure.
+
 #pagebreak()
+
+== Logical Agents
+
+A logical agent is an AI agent that makes decisions by mantaining a *Knowledge Base (KB)* of facts about the environment in which they operate and they use _rules of formal logic_ to understand what to do next.
+
+#figure(
+  image("asset/artificial-intelligence-5.png", width: 70%),
+  caption: [
+    Logical Agent schema
+  ]
+)
+
+- *Inference Engine (IE)*: It's the "brain" that operates on the KB to deduce new facts using mathematical logic rules so that if the facts in KB are true then the conclusions it reaches are guaranteed to be true.
+  
+  - *Inference*: It's the process of deriving new information from information you already have. When we interact with our agent using an *ASK* function the whole process it does is: $ "KB" tack alpha $ Where $alpha$ is the best next action or a new information found in the KB and it's found through a *inference procedure* $i$ that can present the following properties:
+
+    - *Soundness*: $i$ is sound whenever $"KB" tack _i alpha ==> "KB" models alpha$. 
+  
+    - *Completeness*:$i$ is complete whenever $"KB" models alpha ==> "KB" tack_i alpha$
+
+    #figure(
+  image("asset/artificial-intelligence-36.png", width: 70%),
+  caption: [
+    Inference explanation schema
+  ]
+)
+    - *How can we do inference?*: A "simple" idea is *depth first enumeration* of all models, which is both sound and complete meaning that $"KB" models alpha <==> "KB" tack_i alpha$. The way we can do it is:
+
+    ```py
+def tt_entails(kb, alpha, symbols):
+  return tt_check_all(kb, alpha, symbols, {})
+
+
+def tt_check_all(kb, alpha, symbols, model):
+  if not symbols:
+    if kb(model):
+      return alpha(model)
+    else:
+      return True
+  else:
+    p = symbols[0]
+    rest = symbols[1:]
+
+    model_true = model.copy()
+    model_true[p] = True
+
+    model_false = model.copy()
+    model_false[p] = False
+
+    return tt_check_all(kb, alpha, rest, model_true) and tt_check_all(
+        kb, alpha, rest, model_false
+    )    
+    ```
+
+    Which basically checks if $"KB" models alpha$ by brute-forcing every single possible "world" to see if $alpha$ always holds true whenever the KB is true. It's fine but has a major flaw, its time complexity is $O(2^n)$ but it's hard to do better because the whole inference problem is co-NP-complete, meaning that there is no polynomial solution that can solve it unless P = NP which is, at the time of writing this document, not solved.
+
+- *Knowledge Base (KB)*: It's a set of sentences in a formal language that represent facts, rules and constraints about the environment.
+
+#figure(
+  image("asset/artificial-intelligence-34.png", width: 70%),
+  caption: [
+    KB and IE schema
+  ]
+)
+
+This agent can be viewed at the *knowledge level* (by what they know, not by how they are implemented), or at the *implementation level* (the other way around, with data structures of the KB and the algorithm that manipulate it).
+
+The way we ca interact with the logical agent structure is through its inteface, which presents the following actions:
+
+- *TELL*: Update the KB based on current sensory status and actions performed. 
+
+- *ASK*: Queries the KB to deduce the best next action.
+
+- *ACT*: Executes the action. 
+
+```py
+def kb_agent(percept):
+  global kb,                                        # A knowledge base
+         t                                          # A counter, initially set at 0
+
+  tell(kb, make_percept_sentence(percept, t))
+  action = ask(kb, make_action_query(t))
+  tell(kb, make_percept_sentence(action, t))
+  t = t + 1
+
+  return action
+```
+
+- *Propositional Logic*:
+
+$
+"Sentence" --> & "AtomicSentence" | "ComplexSentence" \
+"AtomicSentence" --> & "True" | "False" | P | Q | R | ... \
+"ComplexSentence" --> & ("Sentence") \
+|& not "Sentence" \
+|& "Sentence" and "Sentence"\
+|& "Sentence" or "Sentence"\
+|& "Sentence" => "Sentence"\
+|& "Sentence" <=> "Sentence"
+$
+
+- *Operator Precedence*: $not, and, or,=>, <=>$.
+
+#figure(
+    table(
+      columns: (1fr, 1fr,1fr, 1fr,1fr, 1fr,1fr),
+      inset: 10pt,
+      align: horizon,
+      fill: (col, row) => if row == 0 { rgb("f0f0f0") } else { none },
+      table.header([*$P$*], [*$Q$*], [*$not P$*], [*$P and Q$*], [*$P or Q$*], [*$P => Q$*], [*$P <=> Q$*]),
+      "F","F","T","F","F","T","T",
+      "F","T","T","F","T","T","F",
+      "T","F","F","F","T","F","F",
+      "T","T","F","T","T","T","T",
+    ),
+    caption: [
+      Truth table
+    ],
+  )
+
+- *Models*: It's a way logicians usually think in terms of, meaning that they are structured worlds with respect to which truth can be evaluated. In fact we say: $ m "is a model of a sentence" alpha "if" alpha "is true in" m $ And $M(alpha)$ is the set of all models of $alpha$. \ Also we have that: $ "KB" models alpha <==> M("KB")subset.eq M(alpha) $
+
+#figure(
+  image("asset/artificial-intelligence-35.png", width: 80%),
+  caption: [
+    Models example
+  ]
+)
+
+Another way to do inference is:
+
+- *Application of Inference Rules*: We transform sentences physically to find the solution. What we do is starting with our KB and then apply rules gradually until we build a bridge towards the conclusion $"KB" tack alpha$.
+
+  - #underline()[*BTW*]: Normal forms are required in order to make it easy for a computer to apply rules uniformly, in fact we need to convert all sentences of the KB into a standard format, we usually use *Conjunctive Normal Form (CNF)*.
+
+  $ (P and Q) and R and (not R or P) and ... $  
+
+  - *Forward Chaining*:
+
+  - *Backward Chaining*
+
+#pagebreak()  

@@ -1,0 +1,12 @@
+{
+  "folders": [
+    { "path": "src/ai" },
+    { "path": "src/ml" },
+    { "path": "src/rl" },
+    { "path": "src/xai" },
+    { "path": "src/cv" },
+    { "path": "src/emoi" },
+    { "path": "src/computability" },
+    { "path": "templates" }
+  ]
+}
