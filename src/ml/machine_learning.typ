@@ -341,8 +341,43 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
   
   + Stop if further pruning decreases validation accuracy.
 
-- *Rule Post Pruning*: L6P9
+- *Rule Post Pruning*: 
+
+  + *Convert Tree to Rule Set*: Generate one _if-then_ rule $R_i$ for each root-to-leaf path $"path"(r,f_i)$ such that: $ R_i : (A_(i 1) = v_(i 1)) and (A_(i 2) = v_(1 2)) and ... and (A_(i k) = v_(i k)) ==> y_(f_i) $
+
+  + *Independent Rule Pruning*: For each rule $R_i$, prune antecedents independently:
+
+    - Evaluate removing precondition terms $A_(i j) = v_(i j)$ one by one.
+    
+    - Remove a precondition if doing so does not decrease estimated rule accuracy on $V$.
+
+    - Performed greedily, antecedent by antecedent.
+
+  + *Rule Sorting & Default Fallback*: 
+
+    - Sort the pruned rules in descending order of estimated accuracy on $V$.
+
+    - Append a final *Default Rule* at the bottom predicting the global majority class of $T$.
+
+  - *Classification Inference Protocol*: How do we classify a new unseen test instance $x$?
+
+    - Evaluate $x$ against the ordered rule list sequentially.
+
+    - The first rule whose preconditions are fully satisfied by $x$ fires and assigns its target prediction.
+
+    - If $x$ fails to match any rule, the *Default Rule* fires and assigns the global majority class.
+
+  - _Why is this highly effective?_ 
+
+    - The conversion from trees to rules breaks the strict hierarchical path contraint which means that the pruning of a node doesnt affect the corresponding nodes inside its subtree.
+
+    - Human Iterpretability.
+
+    - Often reaches higher generalization accuracy than standard *Reduced Error Pruning*.
+L6P11
 
 #pagebreak()
+
+
 == Neural Networks
 #pagebreak()
