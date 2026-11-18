@@ -301,7 +301,48 @@ Every path from the root to a leaf node represents a conjuction (logical AND) of
   ]
 )
 
-- *Inductive Bias in DTs*: Lez6 p4
+- *Inductive Bias in DTs*: As we said, DT-based learning algorithms search through $H$ a tree $t in H$ that fits the training data $D$. 
+  
+  - The tree itself represents a *restricted subset* of DNF formulas where the leaves of the same subtree share mandatory _path prefixes_ from the root.
+  
+  - The tree is navigated top-down, greedy hill-climbing with no backtracking and starting from an empty tree.\ \ The bias in all this is the preferences the algorithm has when searching (navigating the tree), we can call them *Search Biases*:
+    
+    -  It prefers shorter trees, in fact, selecting attributes with high informaition gain approximates the search to BFS, placing compact trees high in $H$.
+
+    - Features providing maximal entropy are tested close to the top of the tree.
+
+As we said before, ID3 is vulnerable to noise, outliers and coincidental data patterns which causes _overfitting_ a way we can minimize this is through a process called *Pruning* which simplifies the tree structure post-growth.
+
+- *Pre-Pruning*: It halts tree growth before it perfectly classifies training data:
+  
+  - Stop if $"Information Gain" < epsilon$ where $epsilon$ is a certain threshold we define.
+  
+  - Enforce structural limits.
+  
+    - *Drawback*: We could get the _Horizon Effect_, which means that it might stop prematurely before finding attribute patterns that can effect learning. 
+
+- *Post-Pruning*: The tree is grown to its fullest $T_"full"$ and then we prune with a bottom-up approach:
+
+  - Uses validation data or statistical bound to evaluate pruning.
+
+  - Allows full exploration of multi-attribute interactions first.
+
+    - *Advantage*: Better generalization accuracy.
+
+- *Reduced Error Pruning*: We partition $T$ (the total training data) into a reduce training set $T'$ and a validation set $V_a$ such that $ T = T' union V $
+  
+  + Grow $T_"full"$ on $T'$ using ID3.
+  
+  + Measure the classification accuracy of $T_"full"$ on $V$.
+  
+  + For every internal node, evaluate validation accuracy on $V$ if the subtree rooted at that node were replaced by a single leaf node. 
+  
+  + Remove the subtree yielding the highest accuracy improvement on $V$.
+  
+  + Stop if further pruning decreases validation accuracy.
+
+- *Rule Post Pruning*: L6P9
+
 #pagebreak()
 == Neural Networks
 #pagebreak()
