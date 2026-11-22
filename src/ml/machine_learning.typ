@@ -374,10 +374,94 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
     - Human Iterpretability.
 
     - Often reaches higher generalization accuracy than standard *Reduced Error Pruning*.
-L6P11
+
+- _How do we handle attributes in $RR$?_ Continuous numerical attributes have aninfinite value domain, that is why we need to convert them through a process called *Dynamic Binarization* into binary pseudo-attributes using a split threshold $c in RR$ $ A_c = cases("true" & A < c, "false" & A>= c ) $
+
+  - *Candidate Cutpoint Theorem*: The threshold $c$ that maximizes Information Gain is #underline()[guaranteed to lie between two adjacent sorted values belonging to different target classes].
+
+  - #underline()[*Note*]: Continuous attributes, unlike discrete ones, can be tested along the branches of the DT multiple times.
+
+- _How do we handle missing attribute values?_ In real datasets attribute values for certain instances may be unobserved or missing.
+
+  - *Global Majority*: Impute missing value of attribute $A$ with the most frequent value of $A$ across all training instances. $ hat(v) = arg max_v |S_(A=v)| $
+
+  - *Class Majority* Impute missing value of $A$ with the most frequent value of $A$ among training instances belonging to the same target class $y$. $ hat(v) = arg max_v |S_(y,A=v)| $
+
+  - *Probabilistic Splitting*: Rather than committing to a single imputed value, assign fractional weights $w_i$ based on observed value probabilities $P(v_i|S)$.
+
+- _What do we do if there are multiple attributes missing values in a single instance?_ 
+
+  - *Multiplicative Fractional Weighting*: Fractional weights are multiplied sequentially as the instance traverses nodes testing unobserved attributes:
+
+    + *At Node A*: Split instance $x$ into branches $v_i$ with weights $w_i = w times P(A = v_i | S_("node"_A))$.
+
+    + *At Node B*: If branch $v_i$ encounters missing attributes $B$, further split into sub-branches $u_j$ with compound weights: $ w_(i,j) = w_i times P(B=u_j | S_("node"_B)) = w times P(A = v_i | S_("node"_A)) times P(B = u_j | S_("node"_B)) $
+
+    - _The key principle of this is to partition instances into increasingly fine grained fractional weights._
+
+- *Weighted Subset Cardinality*: Generalize sample set cardinality $|S|$ from counting instances to summing instance weights $w_q$ $ |S| eq.delta sum _(q in S) w_q $
+
+- *Weighted Information Gain*: Entropy $E(S)$ and Information Gain $G(S,A)$ equations remain mathematically identical, substituting weighted subset sizes $ G(S,A) = E(S) - sum _(v in "Values"(A)) frac(sum _(q in S_(A=v)) w_q, sum_(q in S) w_q) E(S_(A=v)) $
+
+#figure(
+  image("asset/machine-learning-7.png", width: 70%),
+  caption: [
+    Multiple Missing Values example
+  ]
+)
 
 #pagebreak()
 
-
 == Neural Networks
+\
+- *Perceptron*: It's the simplest type of artificial neuron and it is mathematically define with:
+
+  - *Hypothesis Space $H$*: The set of functions the perceptron can represent as you vary the parameters $(w,b)$ $ f_(w,b)(x) = op("sign")(w dot x + b) $
+
+  - *Augmented Notation*: Folding the bias $b$ into the weight vector lets you write the affine combination as a single dot product $ w' = [b, w_1,...,w_n], x' = [1,x_1,...,x_n] $
+
+  - *Inner Activation*: Also called pre-activation or net input $ "net" = w' dot x' = sum ^n _(i=1) w_i x_i + b $
+
+  - *Step Activation*: Uses bipolar labels rather then binary $ sigma("net") = cases(+1 & "net" > 0, -1 & "otherwise") $
+
+#figure(
+  image("asset/machine-learning-8.png", width: 50%),
+  caption: [
+    Neuron Architecture schema
+  ]
+)
+
+- *Inductive Bias of Perceptrons*:
+
+  - In the case of the hypothesis space $H$ it assumes linear hyperplanes $w dot x + b = 0$ in $RR^n$.
+
+  - The decision boundary is a free oblique linear hyperplane with arbitrary slope.
+
+  - Regardin the target it has no preference over its shape, though it has risk of overfitting for small datasets.
+
+
+- *Expressive Power and Boolean Gates*: A single perceptron is able to represent linearly separable Boolean functions $x_i in {0,1}$ like:
+
+  - *OR Gate*: #figure(
+    image("asset/machine-learning-9.png", width: 40%),
+    caption: [
+      OR Gate Perceptron schema
+    ]
+  )
+
+  - *AND Gate*: #figure(
+    image("asset/machine-learning-10.png", width: 40%),
+    caption: [
+      AND Gate Perceptron schema
+    ]
+  )
+  
+  - *NOT Gate*: #figure(
+    image("asset/machine-learning-11.png", width: 40%),
+    caption: [
+      NOT Gate Perceptron schema
+    ]
+  )
+
+L7P12
 #pagebreak()
