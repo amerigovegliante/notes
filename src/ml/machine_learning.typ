@@ -282,7 +282,7 @@ Every path from the root to a leaf node represents a conjuction (logical AND) of
     - *Sensitivity*: Entropy and Gini are strictly penalizing near 0.5, driving splits toward pure nodes more effectively than Classification Error.
 
     #figure(
-      image("asset/machine-learning-5.png", width: 40%),
+      image("asset/machine-learning-5.png", width: 50%),
       caption: [
         Impurity comparison graph
       ]
@@ -404,7 +404,7 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
 - *Weighted Information Gain*: Entropy $E(S)$ and Information Gain $G(S,A)$ equations remain mathematically identical, substituting weighted subset sizes $ G(S,A) = E(S) - sum _(v in "Values"(A)) frac(sum _(q in S_(A=v)) w_q, sum_(q in S) w_q) E(S_(A=v)) $
 
 #figure(
-  image("asset/machine-learning-7.png", width: 70%),
+  image("asset/machine-learning-7.png", width: 80%),
   caption: [
     Multiple Missing Values example
   ]
@@ -425,7 +425,7 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
   - *Step Activation*: Uses bipolar labels rather then binary $ sigma("net") = cases(+1 & "net" > 0, -1 & "otherwise") $
 
 #figure(
-  image("asset/machine-learning-8.png", width: 50%),
+  image("asset/machine-learning-8.png", width: 60%),
   caption: [
     Neuron Architecture schema
   ]
@@ -442,26 +442,19 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
 
 - *Expressive Power and Boolean Gates*: A single perceptron is able to represent linearly separable Boolean functions $x_i in {0,1}$ like:
 
-  - *OR Gate*: #figure(
-    image("asset/machine-learning-9.png", width: 40%),
-    caption: [
-      OR Gate Perceptron schema
-    ]
-  )
-
-  - *AND Gate*: #figure(
-    image("asset/machine-learning-10.png", width: 40%),
-    caption: [
-      AND Gate Perceptron schema
-    ]
-  )
-  
-  - *NOT Gate*: #figure(
-    image("asset/machine-learning-11.png", width: 40%),
-    caption: [
-      NOT Gate Perceptron schema
-    ]
-  )
+#figure(
+    table(
+    columns: (0.5fr, 1fr),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [*Logic Gate*], [*Perceptron Schema*],
+    ),
+    [*OR Gate*],figure(image("asset/machine-learning-9.png", width: 80%), caption: [OR Gate Perceptron schema]),
+    [*AND Gate*],figure(image("asset/machine-learning-10.png", width: 80%),caption: [AND Gate Perceptron schema]),
+    [*NOT Gate*],figure(image("asset/machine-learning-11.png", width: 80%),caption: [NOT Gate Perceptron schema]),
+    )
+)
 
 - *The XOR Limitation*: 
 
@@ -506,7 +499,7 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
     - In the case of a false positive it shifts #underline()[negatively]. 
 
     #figure(
-      image("asset/machine-learning-13.png", width: 50%),
+      image("asset/machine-learning-13.png", width: 60%),
       caption: [
         Geometrical interpretation of missclassification updates
       ]
