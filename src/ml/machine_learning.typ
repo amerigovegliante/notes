@@ -463,5 +463,52 @@ As we said before, ID3 is vulnerable to noise, outliers and coincidental data pa
     ]
   )
 
-L7P12
+- *The XOR Limitation*: 
+
+  - Target Function: $x_1 xor x_2$
+
+  - Constraints:
+
+    + $(0,0) --> -1 ==> w_1(0) + w_2(0) + b <= 0 ==> b <= 0$
+
+    + $(1,1) --> -1 ==> w_1 + w_2 + b <= 0$
+
+    + $(1,0) --> 1 ==> w_1 + b > 0$
+
+    + $(0,1) --> 1 ==> w_2 + b > 0$
+
+  - Proof: $(w_1 + b) + (w_2 + b) > 0 ==> w_1 + w_2 + 2b > 0$, since $b <= 0$ we can: $ w_1 + w_2 + b > -b >= 0 ==> w_1 + w_2 + b > 0 $ Which directlty contradicts constraint (2) $qed$
+
+  #figure(
+    image("asset/machine-learning-12.png", width: 55%),
+    caption: [
+      Geometrical interpretation of XOR limitation
+    ]
+  )
+- *Perceptron Learning Algorithm*: Given training set $S = {(x_i, t_i)}$ with target class $t_i in {-1,+1}$
+
+  + Initialize weights $w$ randomly.
+
+  + Repeat until all training examples are correctly classified $o_i = t_i forall i$:
+
+    - For each wrongly classified instance $(x,t)$ where $o= op("sign")(w dot x) != t$ update weight vector $w <- w + Delta w$ where $Delta w = eta (t - o) x$ with $eta > 0$.
+
+      - *Correct Classification*: $(t = o): t - o = 0 ==> Delta w = 0$, meaning no update.
+
+      - *False Negative*: $(t = +1, o = -1): t - o = +2 ==> Delta w = +2 eta x$.
+
+      - *False Positive*: $(t = -1, o = +1): t - o = -2 ==> Delta w = -2 eta x$.
+
+  - _What happens pratically?_  $w_"new" dot x = w_"old" dot x + eta(t - o)norm(x)^2$
+    
+    - In the case of a false negative it shifts #underline()[positively].
+
+    - In the case of a false positive it shifts #underline()[negatively]. 
+
+    #figure(
+      image("asset/machine-learning-13.png", width: 50%),
+      caption: [
+        Geometrical interpretation of missclassification updates
+      ]
+    )
 #pagebreak()
